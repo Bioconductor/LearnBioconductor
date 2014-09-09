@@ -1,12 +1,23 @@
-LearnBioconductor
-=================
+<!--
+%\VignetteIndexEntry{01. Learning R / Bioconductor for Sequence Analysis}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
 
-Training material for a Fall, 2014 introductory R / Bioconductor
-course "Gaining Deeper Understanding of R / Bioconductor"
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
 
-Dates: October 27-29, Seattle, WA.
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
 
-Registration: opening soon.
+# Learning R / Bioconductor for Sequence Analysis
+
+This package contains training material for a Fall, 2014 introductory
+R / Bioconductor course "Gaining Deeper Understanding of R /
+Bioconductor", offered October 27-29, Seattle, WA.
 
 This course is directed at beginning and intermediate students who
 would like an introduction to the analysis and comprehension of
@@ -20,13 +31,13 @@ other statistical tasks; gene set enrichment; and annotation.  Day 3
 transitions to understanding effective approaches for managing larger
 challenges: strategies for working with large data, writing re-usable
 functions, developing reproducible reports and work flows, and
-visualizing results.  The course combines lectures with extensive
-hands-on practicals; students are required to bring a laptop with
-wireless internet access and a modern version of the Chrome or Safari
-web browser.
+visualizing results.
 
-Schedule (tentative)
---------------------
+The course combines lectures with extensive hands-on practicals;
+students are required to bring a laptop with wireless internet access
+and a modern version of the Chrome or Safari web browser.
+
+## Schedule (tentative)
 
 Day 1: Learn
 
