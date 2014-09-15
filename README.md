@@ -2,14 +2,14 @@ LearnBioconductor
 =================
 
 Training material for a Fall, 2014 introductory R / Bioconductor
-course "Gaining Deeper Understanding of R / Bioconductor"
+course "Learning R / Bioconductor for Sequence Analysis"
 
 Dates: October 27-29, Seattle, WA.
 
-Registration: opening soon.
+Registration: [open](https://register.bioconductor.org/Seattle-Oct-2014/)
 
-This course is directed at beginning and intermediate students who
-would like an introduction to the analysis and comprehension of
+This course is directed at beginning and intermediate users who would
+like an introduction to the analysis and comprehension of
 high-throughput sequence data using R and Bioconductor. Day 1 focuses
 on learning essential background: an introduction to the R programming
 language; central concepts for effective use of Bioconductor software;
@@ -28,22 +28,23 @@ web browser.
 Schedule (tentative)
 --------------------
 
-Day 1: Learn
+Day 1: Learn R / Bioconductor
 
 - Introduction to R: objects, functions, help!
 - Introduction to Bioconductor: working with packages and classes
 - Introduction to sequence analysis: typical work flow; data types and
   quality assessment; essential Bioconductor packages
 
-Day 2: Use
+Day 2: Use R / Bioconductor 
 
 - An RNA-seq differential expression work flow (detail)
-- Other work flows (survey): ChIP-seq, variants, copy number
+- Other work flows (survey): ChIP-seq, variants, copy number,
+  epigenomics
 - Machine learning; exploratory and other statistical analysis
 - Annotating genes, genomes, and variants
 - Approaches to gene set enrichment
 
-Day 3: Develop
+Day 3: Develop Skills and Best Practices
 
 - Working with large data
 - Organzing code in functions, files, and packages
