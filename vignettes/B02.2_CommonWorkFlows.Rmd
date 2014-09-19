@@ -1,0 +1,49 @@
+<!--
+%\VignetteIndexEntry{02.2 Other Sequence Analysis Work Flows}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Common Sequence Analysis Work Flows
+
+Martin Morga, Sonali Aroran<br/>
+October 28, 2014
+
+## ChIP-seq
+
+(Martin)
+
+Work flow
+
+R / Bioconductor resources
+
+## Variants
+
+Work flow
+
+R / Bioconductor resources
+
+## Copy number
+
+(Sonali)
+
+Work flow
+
+R / Bioconductor resources
+
+## Epigenomics
+
+(Martin)
+
+Work flow
+
+R / Bioconductor resources

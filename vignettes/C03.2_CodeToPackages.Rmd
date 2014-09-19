@@ -1,0 +1,31 @@
+<!--
+%\VignetteIndexEntry{03.2 Organizing Code in Functions, Files ,and Packages}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Organizing Code in Functions, Files ,and Packages
+
+Martin Morgan<br/>
+October 29, 2014
+
+## Functions
+
+## Scripts
+
+## Packages
+
+The Rstudio 'wizzard'
+
+Version control
+
+## Lab

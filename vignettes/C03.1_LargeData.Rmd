@@ -1,0 +1,29 @@
+<!--
+%\VignetteIndexEntry{03.1 Working with Large Data}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Working with Large Data
+
+Martin Morgan<br/>
+October 29, 2014
+
+## Efficient R code
+
+## Selection
+
+## Iteration
+
+## Parallel evaluation
+
+## Lab

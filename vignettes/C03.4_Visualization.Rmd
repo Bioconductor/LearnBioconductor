@@ -1,0 +1,43 @@
+<!--
+%\VignetteIndexEntry{03.4 Visualization}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Visualization
+
+Martin Morgan<br/>
+October 29, 2014
+
+## Importance and Principles
+
+## Static plots
+
+### `r CRANpkg('ggplot2')` and `r CRANpkg('ggvis')`
+
+### Genome-centric
+
+`r Biocpkg('Gviz')`
+
+`r Biocpkg('ggbio')`
+
+`r Biocpkg('epiv')`
+
+## Interactive visualization
+
+`r Biocpkg('epivizr')`
+
+`r CRANpkg('shiny')`
+
+## Lab
+
+## Resources

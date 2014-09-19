@@ -1,0 +1,33 @@
+<!--
+%\VignetteIndexEntry{01.2 Introduction to Bioconductor}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Introduction to Bioconductor
+
+Martin Morgan<br/>
+October 29, 2014
+
+## Bioconductor
+
+Packages
+
+- [biocViews](http://bioconductor.org/packages/release/BiocViews.html)
+
+Classes
+
+Methods
+
+## Lab
+
+## Resources

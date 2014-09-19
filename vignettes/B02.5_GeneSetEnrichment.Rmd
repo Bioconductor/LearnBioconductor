@@ -1,0 +1,25 @@
+<!--
+%\VignetteIndexEntry{02.5 Gene Set Enrichment}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Gene Set Enrichment and Pathway Analysis
+
+Martin Morgan<br/>
+October 28, 2014
+
+## Approaches to Gene Set Enrichment
+
+## R / Bioconductor resources
+
+## Lab
