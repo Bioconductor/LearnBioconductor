@@ -4,30 +4,31 @@
 %\VignetteEngine{knitr::knitr}
 -->
 
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+knitr::opts_chunk$set(cache=TRUE, tidy=FALSE)
+```
+
 ```{r setup, echo=FALSE}
 library(LearnBioconductor)
 library(xtable)
 stopifnot(BiocInstaller::biocVersion() == "3.0")
 ```
 
-```{r style, echo = FALSE, results = 'asis'}
-BiocStyle::markdown()
-```
-
 # Machine Learning 
 
 Sonali Arora <br/>
-October 28. 2014
+28 October, 2014
 
 ## Introduction 
 
 Statistical Learning plays an important role in Genomics. A few example of 
 learning problems would be - 
-* Identify the risk factors(genes) for prostrate cancer based on gene expression
-data 
+* Identify the risk factors(genes) for prostrate cancer based on gene
+  expression data
 * Predict the chances of breast cancer survival in a patient. 
-* Identify patterns of gene expression among different sub types of breast 
-cancer
+* Identify patterns of gene expression among different sub types of
+  breast cancer
 
 Typically, we have an outcome measurement, usually quantitative (such as gene
 expression) or categorical (such as breast cancer /no breast cancer), that we 
@@ -61,7 +62,7 @@ techniques -
 biocView_df <- data.frame( technique=c("Bayesian","Classification","Clustering"
     ,"DecisionTree","NeuralNetwork","SupportVectorMachines","DimensionReduction",
     "HiddenMarkovModel","Regression","PrincipalComponent"), packages = 
-    c(15,64,89,7,1,1,2,4,7,4))
+    as.integer(c(15, 64, 89, 7, 1, 1, 2, 4, 7, 4)))
 print(xtable(biocView_df), type="html", comment=FALSE)
 ```
 
@@ -81,7 +82,7 @@ represent samples (with sample data summarized as a DataFrame-class). A
 SummarizedExperiment contains one or more assays, each represented by a 
 matrix-like object of numeric or other mode.
 
-![Summarized Experiment](inst/figure/sum_expt.png)
+![Summarized Experiment](our_figures/SummarizedExperiment.png)
 
 This object has been made available to you, you can simply read it in using 
 
@@ -95,11 +96,11 @@ ncilabels <- colData(NCI60)
 The gene expression data is stored in "assay" whereas the labels are stored in 
 colData.
 
-For **Supervised learning**, we will use cervical count data from the Biocoductor
-package, MLSeq. This data set contains expressions of 714 miRNA's of human 
-samples. There are 29 tumor and 29 non-tumor cervical samples. For learning 
-purposes, we can treat these as two separate groups and run various 
-classification algorithms. 
+For **Supervised learning**, we will use cervical count data from the
+Biocoductor package, `r Biocpkg("MLSeq")`. This data set contains
+expressions of 714 miRNA's of human samples. There are 29 tumor and 29
+non-tumor cervical samples. For learning purposes, we can treat these
+as two separate groups and run various classification algorithms.
 
 ```{r message=FALSE}
 library(MLSeq)
@@ -199,7 +200,7 @@ between each pair of observations (like Euclidean distance). We start at the
 bottom of the dendrogram, each of the n observations are considered as a 
 cluster, the two clusters that are most similar to each other are fused together
 so now we have n-1 clusters. Next the two clusters that are similar together are
-fused so that there are n-2 clusters. This algorithm proceeds iteratively until 
+fused so that there are n-2 clusters. This algorithm proceeds iteractively until 
 all samples belong to one single cluster and the dendrogram is complete. 
 
 We define the dissimilarity between two clusters or two groups of observations
@@ -312,7 +313,7 @@ More concretely, if k=3 and there are 2 observation belonging to class 1 and 1
 observation belonging to class 2, then we the test observation is assigned to
 class1. 
 
-![knn_figure](inst/figure/knn.png)
+![knn_figure](our_figures/knn.png)
 
 For all supervised experiments its a good idea to hold out some data as 
 _Training Data_ and build a model with this data. We can then test the  built 
@@ -388,7 +389,7 @@ estimates are averaged.
 
 For example, K-fold cross validation where K=5
 
-![cv_figure](inst/figure/cv.png)
+![cv_figure](our_figures/cross_validation.png)
 
 As you can see, computation for this very simple learner can become quite 
 complicated.
