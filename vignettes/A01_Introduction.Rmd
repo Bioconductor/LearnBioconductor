@@ -61,7 +61,7 @@ Day 2: Use R / Bioconductor
 Day 3: Develop Skills and Best Practices
 
 - 9:00 - 10:30 Working with large data
-- 11:00 - 12:30 Organzing code in functions, files, and packages
+- 11:00 - 12:30 Organizing code in functions, files, and packages
 - 1:30 - 3:00 Reproducible reports and work flows: markdown
 - 3:30 - 4:30 Visualization
 - 4:30 - 5:00 Summary

@@ -1,12 +1,11 @@
-LearnBioconductor
-=================
+Learning R / Bioconductor for Sequence Analysis
+===============================================
 
-Training material for a Fall, 2014 introductory R / Bioconductor
-course "Learning R / Bioconductor for Sequence Analysis"
+Fred Hutchinson Cancer Research Center, Seattle, WA<br />
+October 27-29
 
-Dates: October 27-29, Seattle, WA.
-
-Registration: [open](https://register.bioconductor.org/Seattle-Oct-2014/)
+Location: October 27 / 28: Arnold Building M1-A305/A307; October 29:
+Weintraub B1-072/074/076
 
 This course is directed at beginning and intermediate users who would
 like an introduction to the analysis and comprehension of
@@ -50,7 +49,7 @@ Day 2: Use R / Bioconductor
 Day 3: Develop Skills and Best Practices
 
 - 9:00 - 10:30 Working with large data
-- 11:00 - 12:30 Organzing code in functions, files, and packages
+- 11:00 - 12:30 Organizing code in functions, files, and packages
 - 1:30 - 3:00 Reproducible reports and work flows: markdown
 - 3:30 - 4:30 Visualization
 - 4:30 - 5:00 Summary
