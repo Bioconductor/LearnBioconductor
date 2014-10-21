@@ -15,7 +15,7 @@ BiocStyle::markdown()
 
 # Common Sequence Analysis Work Flows
 
-Martin Morga, Sonali Aroran<br/>
+Martin Morgan, Sonali Arora<br/>
 October 28, 2014
 
 ## ChIP-seq

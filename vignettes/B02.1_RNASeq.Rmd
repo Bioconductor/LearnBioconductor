@@ -1,0 +1,42 @@
+<!--
+%\VignetteIndexEntry{02.1 RNA-Seq Work Flows}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+knitr::opts_chunk$set(cache=TRUE, tidy=FALSE)
+```
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+# RNA-Seq Work Flows
+
+Martin Morgan, Sonali Arora<br/>
+October 28, 2014
+
+## Steps 1-5: Upstream analysis
+
+1. Experimental design
+
+2. Wet-lab
+
+3. Sequencing
+
+4. Alignment
+
+Bowtie / Tophat / Cufflinks
+
+STAR
+
+GMAP
+
+## Step 6. Analysis
+
+## Step 7. Comprehension
+
+## Lab
