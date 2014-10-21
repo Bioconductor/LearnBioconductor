@@ -21,19 +21,25 @@ October 28, 2014
 
 ## Steps 1-5: Upstream analysis
 
-1. Experimental design
+### 1. Experimental design
 
-2. Wet-lab
+### 2. Wet-lab
 
-3. Sequencing
+### 3. Sequencing
 
-4. Alignment
+### 4. Alignment
 
-Bowtie / Tophat / Cufflinks
+Strategies
+- _de novo_
+- Genome
+- Transcriptome
 
-STAR
+Aligners
+- Bowtie / Tophat / Cufflinks
+- STAR
+- GMAP
 
-GMAP
+### 5. Reduction
 
 ## Step 6. Analysis
 

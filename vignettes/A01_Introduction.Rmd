@@ -41,27 +41,35 @@ and a modern version of the Chrome or Safari web browser.
 
 Day 1: Learn R / Bioconductor
 
-- 9:00 - 10:30 Introduction to R: objects, functions, help!
-- 11:00 - 12:30 Introduction to Bioconductor: working with packages and classes
-- 1:30 - 5:00 (break: 3:00 - 3:30) Introduction to sequence analysis:
+- 9:00 - 10:30 [Introduction to R](A01.1_IntroductionToR.html):
+  objects, functions, help!
+- 11:00 - 12:30
+  [Introduction to Bioconductor](A01.2_IntroductionToBioconductor.html):
+  working with packages and classes
+- 1:30 - 5:00 (break: 3:00 - 3:30)
+  [Introduction to sequence analysis](A01.3_BioconductorForSequenceAnalysis.html):
   typical work flow; data types and quality assessment; essential
   Bioconductor packages
 
 Day 2: Use R / Bioconductor 
 
-- 9:00 - 12:30 (break (10:30 - 11:00) An RNA-seq differential
-  expression work flow (detail)
-- 1:30 - 2:00 Other work flows (survey): ChIP-seq, variants, copy
-  number, epigenomics
-- 2:00 - 3:00 Machine learning; exploratory and other statistical
-  analysis
-- 3:30 - 4:00 Annotating genes, genomes, and variants
-- 4:00 - 5:00 Approaches to gene set enrichment
+- 9:00 - 12:30 (break: 10:30 - 11:00) An RNA-seq differential
+  expression work flow ([lecture](B02.1_RNASeq.html); practical)
+- 1:30 - 2:00 [Other work flows](B02.2_CommonWorkFlows.html) (survey):
+  ChIP-seq, variants, copy number, epigenomics
+- 2:00 - 3:00 [Machine learning](B02.3_MachineLearning.html);
+  exploratory and other statistical analysis
+- 3:30 - 4:00
+  [Annotating genes, genomes, and variants](B02.4_Annotation.html)
+- 4:00 - 5:00
+  [Approaches to gene set enrichment](B02.5_GeneSetEnrichment.html)
 
 Day 3: Develop Skills and Best Practices
 
-- 9:00 - 10:30 Working with large data
-- 11:00 - 12:30 Organizing code in functions, files, and packages
-- 1:30 - 3:00 Reproducible reports and work flows: markdown
-- 3:30 - 4:30 Visualization
+- 9:00 - 10:30 [Working with large data](C03.1_LargeData.html)
+- 11:00 - 12:30
+  [Organizing code in functions, files, and packages](C03.2_CodeToPackages.html)
+- 1:30 - 3:00
+  [Reproducible reports and work flows](C03.3_ReproducibleResearch.html)
+- 3:30 - 4:30 [Visualization](C03.4_Visualization.html)
 - 4:30 - 5:00 Summary
