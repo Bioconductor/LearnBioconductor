@@ -30,23 +30,27 @@ Schedule (tentative)
 
 Day 1: Learn R / Bioconductor
 
-- Introduction to R: objects, functions, help!
-- Introduction to Bioconductor: working with packages and classes
-- Introduction to sequence analysis: typical work flow; data types and
-  quality assessment; essential Bioconductor packages
+- 9:00 - 10:30 Introduction to R: objects, functions, help!
+- 11:00 - 12:30 Introduction to Bioconductor: working with packages and classes
+- 1:30 - 5:00 (break: 3:00 - 3:30) Introduction to sequence analysis:
+  typical work flow; data types and quality assessment; essential
+  Bioconductor packages
 
 Day 2: Use R / Bioconductor 
 
-- An RNA-seq differential expression work flow (detail)
-- Other work flows (survey): ChIP-seq, variants, copy number,
-  epigenomics
-- Machine learning; exploratory and other statistical analysis
-- Annotating genes, genomes, and variants
-- Approaches to gene set enrichment
+- 9:00 - 12:30 (break (10:30 - 11:00) An RNA-seq differential
+  expression work flow (detail)
+- 1:30 - 2:00 Other work flows (survey): ChIP-seq, variants, copy
+  number, epigenomics
+- 2:00 - 3:00 Machine learning; exploratory and other statistical
+  analysis
+- 3:30 - 4:00 Annotating genes, genomes, and variants
+- 4:00 - 5:00 Approaches to gene set enrichment
 
 Day 3: Develop Skills and Best Practices
 
-- Working with large data
-- Organzing code in functions, files, and packages
-- Reproducible reports and work flows: markdown
-- Visualization
+- 9:00 - 10:30 Working with large data
+- 11:00 - 12:30 Organzing code in functions, files, and packages
+- 1:30 - 3:00 Reproducible reports and work flows: markdown
+- 3:30 - 4:30 Visualization
+- 4:30 - 5:00 Summary
