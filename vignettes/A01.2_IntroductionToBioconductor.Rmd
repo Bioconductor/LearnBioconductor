@@ -11,6 +11,7 @@ stopifnot(BiocInstaller::biocVersion() == "3.0")
 
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
+knitr::opts_chunk$set(cache=TRUE, tidy=FALSE)
 ```
 
 # Introduction to Bioconductor
@@ -20,14 +21,351 @@ October 29, 2014
 
 ## Bioconductor
 
-Packages
+### 3. Bioconductor
 
+Analysis and comprehension of high-throughput genomic data
+
+- Statistical analysis: large data, technological artifacts, designed
+  experiments; rigorous
+- Comprehension: biological context, visualization, reproducibility
+- High-throughput
+  - Sequencing: RNASeq, ChIPSeq, variants, copy number, ...
+  - Microarrays: expression, SNP, ...
+  - Flow cytometry, proteomics, images, ...
+
+Packages, vignettes, work flows
+
+- 934 packages
+- Discover and navigate via [biocViews][]
+- Package 'landing page'
+  - Title, author / maintainer, short description, citation,
+    installation instructions, ..., download statistics
+- All user-visible functions have help pages, most with runnable
+  examples
+- 'Vignettes' an important feature in Bioconductor -- narrative
+  documents illustrating how to use the package, with integrated code
+- 'Release' (every six months) and 'devel' branches
+- [Support site](https://support.bioconductor.org);
+  [videos](https://www.youtube.com/user/bioconductor), [recent
+  courses](http://bioconductor.org/help/course-materials/)
+
+Objects
+
+- Represent complicated data types
+- Foster interoperability
+- S4 object system
+  - Introspection: `getClass()`, `showMethods(..., where=search())`,
+    `selectMethod()`
+  - 'accessors' and other documented functions / methods for
+    manipulation, rather than direct access to the object structure
+- Interactive help
+  - `method?"substr,<tab>"` to select help on methods, `class?D<tab>`
+    for help on classes
+
+Example
+
+```{r Biostrings, message=FALSE}
+require(Biostrings)                     # Biological sequences
+data(phiX174Phage)                      # sample data, see ?phiX174Phage
+phiX174Phage
+m <- consensusMatrix(phiX174Phage)[1:4,] # nucl. x position counts
+polymorphic <- which(colSums(m != 0) > 1)
+m[, polymorphic]
+```
+```{r showMethods, eval=FALSE}
+showMethods(class=class(phiX174Phage), where=search())
+```
+
+<a name="i-granges"></a>
+
+Annotation
+
+- _Bioconductor_ provides extensive access to 'annotation' resources
+  (see the [AnnotationData][] biocViews hierarchy); some interesting
+  examples to explore during this lab include:
+- [biomaRt][], [PSICQUIC][], [KEGGREST][] and other packages for
+  querying on-line resources; each of these have informative vignettes.
+- [AnnotationDbi][] is a cornerstone of the
+  [Annotation Data][AnnotationData] packages provided by Bioconductor.
+  - **org** packages (e.g., [org.Hs.eg.db][]) contain maps between
+    different gene identifiers, e.g., ENTREZ and SYMBOL. The basic
+    interface to these packages is described on the help page `?select`
+  - **TxDb** packages (e.g., [TxDb.Hsapiens.UCSC.hg19.knownGene][])
+    contain gene models (exon coordinates, exon / transcript
+    relationships, etc) derived from common sources such as the hg19
+    knownGene track of the UCSC genome browser. These packages can be
+    queried, e.g., as described on the `?exonsBy` page to retrieve all
+    exons grouped by gene or transcript.
+  - **BSgenome** packages (e.g., [BSgenome.Hsapiens.UCSC.hg19][])
+    contain whole genomes of model organisms.
+- [VariantAnnotation][] and [ensemblVEP][] provide access to sequence
+  annotation facilities, e.g., to identify coding variants; see the
+  [Introduction to VariantAnnotation](http://bioconductor.org/packages/release/bioc/vignettes/ShortRead/inst/doc/Overview.pdf)
+  vignette for a brief introduction.
+- Take a quick look at the [annotation work
+  flow](http://bioconductor.org/help/workflows/annotation/annotation/)
+  on the Bioconductor web site.
+
+<a name="package-tour"></a>
+
+
+# Resources
+
+- [Web site][Bioconductor] -- install, learn, use, develop _R_ /
+  _Bioconductor_ packages
+- [Support](http://support.bioconductor.org) -- seek help and
+  guidance; also
 - [biocViews](http://bioconductor.org/packages/release/BiocViews.html)
+  -- discover packages
+- Package landing pages, e.g.,
+  [GenomicRanges](http://bioconductor.org/packages/release/bioc/html/GenomicRanges.html),
+  including title, description, authors, installation instructions,
+  vignettes (e.g., GenomicRanges '[How
+  To](http://bioconductor.org/packages/release/bioc/vignettes/GenomicRanges/inst/doc/GenomicRangesHOWTOs.pdf)'),
+  etc.
+- [Course](http://bioconductor.org/help/course-materials/) and other
+  [help](http://bioconductor.org/help/) material (e.g., videos, EdX
+  course, community blogs, ...)
 
-Classes
+Publications (General _Bioconductor_)
 
-Methods
+- Lawrence M, Huber W, Pagès H, Aboyoun P, Carlson M, et al. (2013)
+  Software for Computing and Annotating Genomic Ranges. PLoS Comput
+  Biol 9(8): e1003118. doi:
+  [10.1371/journal.pcbi.1003118][GRanges.bib]
+- Lawrence, M, and Morgan, M. 2014. Scalable Genomics with R and
+  Bioconductor. Statistical Science 2014, Vol. 29, No. 2,
+  214-226. [http://arxiv.org/abs/1409.2864v1][Scalable.bib]
+
+Other
+
+- Lawrence, M. 2014. Software for Enabling Genomic Data
+  Analysis. Bioc2014 conference [slides][Lawrence.bioc2014.bib].
+
+<!-- Bibliography -->
+
+[R]: http://r-project.org
+[Bioconductor]: http://bioconductor.org
+[GRanges.bib]: http://dx.doi.org/10.1371/journal.pcbi.1003118
+[Scalable.bib]: http://arxiv.org/abs/1409.2864
+[Lawrence.bioc2014.bib]:
+    http://bioconductor.org/help/course-materials/2014/BioC2014/Lawrence_Talk.pdf
+
+
+[AnnotationData]: http://bioconductor.org/packages/release/BiocViews.html#___AnnotationData
+[AnnotationDbi]: http://bioconductor.org/packages/release/bioc/html/AnnotationDbi.html
+[AnnotationHub]: http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html
+[BSgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/release/data/annotation/html/BSgenome.Hsapiens.UCSC.hg19.html
+[BSgenome]: http://bioconductor.org/packages/release/bioc/html/BSgenome.html
+[BiocParallel]: http://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[Biostrings]: http://bioconductor.org/packages/release/bioc/html/Biostrings.html
+[Bsgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/release/data/annotation/html/Bsgenome.Hsapiens.UCSC.hg19.html
+[CNTools]: http://bioconductor.org/packages/release/bioc/html/CNTools.html
+[ChIPQC]: http://bioconductor.org/packages/release/bioc/html/ChIPQC.html
+[ChIPpeakAnno]: http://bioconductor.org/packages/release/bioc/html/ChIPpeakAnno.html
+[DESeq2]: http://bioconductor.org/packages/release/bioc/html/DESeq2.html
+[DiffBind]: http://bioconductor.org/packages/release/bioc/html/DiffBind.html
+[GenomicAlignments]: http://bioconductor.org/packages/release/bioc/html/GenomicAlignments.html
+[GenomicFiles]: http://bioconductor.org/packages/release/bioc/html/GenomicFiles.html
+[GenomicRanges]: http://bioconductor.org/packages/release/bioc/html/GenomicRanges.html
+[Homo.sapiens]: http://bioconductor.org/packages/release/data/annotation/html/Homo.sapiens.html
+[IRanges]: http://bioconductor.org/packages/release/bioc/html/IRanges.html
+[KEGGREST]: http://bioconductor.org/packages/release/bioc/html/KEGGREST.html
+[PSICQUIC]: http://bioconductor.org/packages/release/bioc/html/PSICQUIC.html
+[Rsamtools]: http://bioconductor.org/packages/release/bioc/html/Rsamtools.html
+[Rsubread]: http://bioconductor.org/packages/release/bioc/html/Rsubread.html
+[ShortRead]: http://bioconductor.org/packages/release/bioc/html/ShortRead.html
+[SomaticSignatures]: http://bioconductor.org/packages/release/bioc/html/SomaticSignatures.html
+[TxDb.Hsapiens.UCSC.hg19.knownGene]: http://bioconductor.org/packages/release/data/annotation/html/TxDb.Hsapiens.UCSC.hg19.knownGene.html
+[VariantAnnotation]: http://bioconductor.org/packages/release/bioc/html/VariantAnnotation.html
+[VariantFiltering]: http://bioconductor.org/packages/release/bioc/html/VariantFiltering.html
+[VariantTools]: http://bioconductor.org/packages/release/bioc/html/VariantTools.html
+[biocViews]: http://bioconductor.org/packages/release/BiocViews.html#___Software
+[biomaRt]: http://bioconductor.org/packages/release/bioc/html/biomaRt.html
+[cn.mops]: http://bioconductor.org/packages/release/bioc/html/cn.mops.html
+[edgeR]: http://bioconductor.org/packages/release/bioc/html/edgeR.html
+[ensemblVEP]: http://bioconductor.org/packages/release/bioc/html/ensemblVEP.html 
+[h5vc]: http://bioconductor.org/packages/release/bioc/html/h5vc.html
+[limma]: http://bioconductor.org/packages/release/bioc/html/limma.html
+[metagenomeSeq]: http://bioconductor.org/packages/release/bioc/html/metagenomeSeq.html
+[org.Hs.eg.db]: http://bioconductor.org/packages/release/data/annotation/html/org.Hs.eg.db.html
+[org.Sc.sgd.db]: http://bioconductor.org/packages/release/data/annotation/html/org.Sc.sgd.db.html
+[phyloseq]: http://bioconductor.org/packages/release/bioc/html/phyloseq.html
+[rtracklayer]: http://bioconductor.org/packages/release/bioc/html/rtracklayer.html
+[snpStats]: http://bioconductor.org/packages/release/bioc/html/snpStats.html
+[Gviz]: http://bioconductor.org/packages/release/bioc/html/Gviz.html
+[epivizr]: http://bioconductor.org/packages/release/bioc/html/epivizr.html
+[ggbio]: http://bioconductor.org/packages/release/bioc/html/ggbio.html
+[OmicCircos]: http://bioconductor.org/packages/release/bioc/html/OmicCircos.html
+
 
 ## Lab
+
+### 1. Short read quality assessment
+
+Option 1: `fastqc`
+
+1. Start _fastqc_
+
+2. Select fastq.gz files from the File --> Open menu. Files are in
+   `/home/training/Data/Morgan`
+
+3. Press `OK`
+
+4. Study plots and the Help -> Contents menu
+
+Option 2: `r Biocpkg("ShortRead")`
+
+```{r ShortRead, messages=FALSE}
+## 1. attach ShortRead and BiocParallel
+suppressPackageStartupMessages({
+    library(ShortRead)
+    library(BiocParallel)
+})
+
+## 2. create a vector of file paths
+fls <- dir("/home/training/Data/Morgan", pattern="*fastq.gz", full=TRUE)
+
+## 3. collect statistics
+stats <- qa(fls)
+
+## 4. generate and browse the report
+browseURL(report(stats))
+```
+
+Check out the qa report from all lanes
+
+```{r ShortRead-qa-all}
+load("/home/training/Data/Morgan/qa_all.Rda")
+browseURL(report(qa_all))
+```
+
+## 2. Alignments (and genomic annotations)
+
+![](our_figures/RangeOperations.png)
+
+This data is from the `r Biocannopkg("airway")` Bioconductor
+annotation package; see the
+[vignette](http://bioconductor.org/packages/release/data/experiment/vignettes/airway/inst/doc/airway.html) for details
+
+Integrative Genomics Viewer
+
+1. Create an 'igv' directory (if it does not already exist) and add
+   the file hg19_alias.tab to it. This is a simple tab-delimited file
+   that maps between the sequence names used by the alignment, and the
+   sequence names known to IGV.
+
+2. Start igv.
+
+3. Choose hg19 from the drop-down menu at the top left of
+   the screen
+
+4. Use File -> Load from File menu to load a bam file, e.g.,
+   `/home/training/Data/Morgan/SRR1039508_sorted.bam`
+
+5. Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
+   symbol in the box toward the center of the browser window. Adjust
+   the zoom until reads come in to view, and interpret the result.
+
+```
+mkdir -p ~/igv/genomes
+cp /home/training/Data/Morgan/hg19_alias.tab ~/igv/genomes/
+igv
+```
+
+_Bioconductor_: we'll explore how to map between different types of
+identifiers, how to navigate genomic coordinates, and how to query BAM
+files for aligned reads.
+
+1. Attach 'Annotation' packages containing information about gene
+   symbols `r Biocannopkg("org.Hs.eg.db")` and genomic coordinates
+   (e.g., genes, exons, cds, transcripts) `r
+   Biocannopkg(TxDb.Hsapiens.UCSC.hg19.knownGene)`. Arrange for the
+   'seqlevels' (chromosome names) in the TxDb package to match those
+   in the BAM files.
+
+2. Use the `org.*` package to map from gene symbol to Entrez gene id,
+   and the `TxDb.*` package to retrieve gene coordinates of the
+   SPARCL1 gene. N.B. -- The following uses a single gene symbol, but
+   we could have used 1, 2, or all gene symbols in a _vectorized_ fashion.
+
+3. Attach the `r Biocpkg("GenomicAlignments")` package for working
+   with aligned reads. Use `range()` to get the genomic coordinates
+   spanning the first and last exon of SPARCL1. Input paired reads
+   overlapping SPARCL1.
+
+4. What questions can you easily answer about these alignments? E.g.,
+   how many reads overlap this region of interest?
+
+```{r setup-view, message=FALSE, warning=FALSE, cache=FALSE}
+## 1.a 'Annotation' packages
+suppressPackageStartupMessages({
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    library(org.Hs.eg.db)
+})
+
+## 1.b -- map 'seqlevels' as recorded in the TxDb file to those in the
+## BAM file
+fl <- "~/igv/genomes/hg19_alias.tab"
+map <- with(read.delim(fl, header=FALSE, stringsAsFactors=FALSE),
+    setNames(V1, V2))
+seqlevels(TxDb.Hsapiens.UCSC.hg19.knownGene, force=TRUE) <- map
+
+## 2. Symbol -> Entrez ID -> Gene coordinates
+sym2eg <- select(org.Hs.eg.db, "SPARCL1", "ENTREZID", "SYMBOL")
+exByGn <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene, "gene")
+sparcl1exons <- exByGn[[sym2eg$ENTREZID]]
+
+## 3. Aligned reads
+suppressPackageStartupMessages({
+    library(GenomicAlignments)
+})
+
+fl <- "/home/training/Data/Morgan/SRR1039508_sorted.bam"
+sparcl1gene <- range(sparcl1exons)
+param <- ScanBamParam(which=sparcl1gene)
+aln <- readGAlignmentPairs(fl, param=param)
+```
+
+5. As another exercise we ask how many of the reads we've input are
+   compatible with the known gene model. We have to find the
+   transcripts that belong to our gene, and then exons grouped by
+   transcript
+
+```{r compatibleAlignments, warning=FALSE, cache=FALSE}
+## 5.a. exons-by-transcript for our gene of interest
+txids <- select(TxDb.Hsapiens.UCSC.hg19.knownGene, sym2eg$ENTREZID,
+    "TXID", "GENEID")$TXID
+exByTx <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene, "tx")[txids]
+
+## 5.b compatible alignments
+hits <- findCompatibleOverlaps(query=aln, subject=exByTx)
+good <- seq_along(aln) %in% queryHits(hits)
+table(good)
+```
+
+6. Finally, let's go from gene model to protein coding
+   sequence. (a) Extract CDS regions grouped by transcript, select just
+   transcripts we're interested in, (b) attach and then extract the coding
+   sequence from the appropriate reference genome. Translating the
+   coding sequences to proteins.
+
+```{r coding-sequence, warning=FALSE, cache=FALSE}
+## reset seqlevels
+restoreSeqlevels(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
+## a. cds coordinates, grouped by transcript
+txids <- select(TxDb.Hsapiens.UCSC.hg19.knownGene, sym2eg$ENTREZID,
+    "TXID", "GENEID")$TXID
+cdsByTx <- cdsBy(TxDb.Hsapiens.UCSC.hg19.knownGene, "tx")[txids]
+
+## b. coding sequence from relevant reference genome
+suppressPackageStartupMessages({
+    library(BSgenome.Hsapiens.UCSC.hg19)
+})
+
+dna <- extractTranscriptSeqs(BSgenome.Hsapiens.UCSC.hg19, cdsByTx)
+protein <- translate(dna)
+```
 
 ## Resources

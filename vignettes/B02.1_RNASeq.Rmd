@@ -29,20 +29,51 @@ October 28, 2014
 
 ### 4. Alignment
 
-Strategies
+Alignment strategies
 - _de novo_
+  - No reference genome; considerable sequencing and computational
+    resources
 - Genome
+  - Established reference genome
+  - Splice-aware aligners
+  - Novel transcript discovery
 - Transcriptome
+  - Established reference genome; reliable gene model
+  - Simple aligners
+  - Known gene / transcript expression
 
-Aligners
-- Bowtie / Tophat / Cufflinks
-- STAR
-- GMAP
+Splice-aware aligners -- examples
+- [Bowtie2][] / [TopHat][]
+- [STAR][] [doi](http://dx.doi.org/10.1093/bioinformatics/bts635)
+- [GMAP/GSNAP]
+- subread [doi](http://dx.doi.org/10.1093/nar/gkt214)
+- Systematic evaluation (Engstrom et al., 2013,
+  [doi](http://dx.doi.org/10.1038/nmeth.2722))
 
 ### 5. Reduction
 
+As part of an alignment / analysis pipeline
+- Cufflinks [doi](http://dx.doi.org/10.1038/nprot.2012.016)
+  [How Cufflinks Works](http://cufflinks.cbcb.umd.edu/howitworks.html)
+- [RSEM][] [doi](http://dx.doi.org/10.1186/1471-2105-12-323), with or without
+  reference genome
+
+Count tables
+
 ## Step 6. Analysis
+
+- [Cuffdiff][]
 
 ## Step 7. Comprehension
 
 ## Lab
+
+
+
+[Bowtie2]: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+[TopHat]: http://ccb.jhu.edu/software/tophat/index.shtml
+[Cufflinks]: http://cufflinks.cbcb.umd.edu/
+
+[RSEM]: http://deweylab.biostat.wisc.edu/rsem/
+[STAR]: https://github.com/alexdobin/STAR
+[GMAP/GSNAP]: http://research-pub.gene.com/gmap/

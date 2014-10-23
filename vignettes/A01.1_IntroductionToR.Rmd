@@ -11,6 +11,7 @@ stopifnot(BiocInstaller::biocVersion() == "3.0")
 
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
+knitr::opts_chunk$set(cache=TRUE, tidy=FALSE)
 ```
 
 # Introduction to R
@@ -20,6 +21,174 @@ October 29, 2014
 
 ## R
 
+Language and environment for statistical computing and graphics
+
+- Full-featured programming language
+- Interactive and *interpretted* -- convenient and forgiving
+- Coherent, extensive documentation
+- Statistical, e.g. `factor()`, `NA`
+- Extensible -- CRAN, Bioconductor, github, ...
+
+Vector, class, object
+
+- Efficient _vectorized_ calculations on 'atomic' vectors `logical`,
+  `integer`, `numeric`, `complex`, `character`, `byte`
+- Atomic vectors are building blocks for more complicated _objects_
+  - `matrix` -- atomic vector with 'dim' attribute
+  - `data.frame` -- list of equal length atomic vectors
+- Formal _classes_ represent complicated combinations of vectors,
+  e.g., the return value of `lm()`, below
+
+Function, generic, method
+
+- Functions transform inputs to outputs, perhaps with side effects,
+  e.g., `rnorm(1000)`
+  - Argument matching first by name, then by position
+  - Functions may define (some) arguments to have default values
+- _Generic_ functions dispatch to specific _methods_ based on class of
+  argument(s), e.g., `print()`. 
+- Methods are functions that implement specific generics, e.g.,
+  `print.factor`; methods are invoked _indirectly_, via the generic.
+
+Introspection
+
+- General properties, e.g., `class()`, `str()`
+- Class-specific properties, e.g., `dim()`
+
+Help
+
+- `?print`: help on the generic print 
+- `?print.data.frame`: help on print method for objects of class
+    data.frame.
+
+Example
+
+```{r}
+x <- rnorm(1000)                   # atomic vectors
+y <- x + rnorm(1000, sd=.5)
+df <- data.frame(x=x, y=y)         # object of class 'data.frame'
+plot(y ~ x, df)                    # generic plot, method plot.formula
+fit <- lm(y ~x, df)                # object of class 'lm'
+methods(class=class(fit))          # introspection
+```
+
 ## Lab
 
+### 1. _R_ data manipulation
+
+This exercise servers as a refresher / tutorial on basic input and
+manipulation of data.
+
+Input a file that contains ALL (acute lymphoblastic leukemia) patient
+information
+
+```{r echo=TRUE, eval=FALSE}
+fname <- file.choose()   ## "ALLphenoData.tsv"
+stopifnot(file.exists(fname))
+pdata <- read.delim(fname)
+```
+```{r echo=FALSE}
+fname <- "../inst/extdata/ALLphenoData.tsv"
+stopifnot(file.exists(fname))
+pdata <- read.delim(fname)
+```
+
+Check out the help page `?read.delim` for input options, and explore
+basic properties of the object you've created, for instance...
+
+```{r ALL-properties}
+class(pdata)
+colnames(pdata)
+dim(pdata)
+head(pdata)
+summary(pdata$sex)
+summary(pdata$cyto.normal)
+```
+
+Remind yourselves about various ways to subset and access columns of a
+data.frame
+
+```{r ALL-subset}
+pdata[1:5, 3:4]
+pdata[1:5, ]
+head(pdata[, 3:5])
+tail(pdata[, 3:5], 3)
+head(pdata$age)
+head(pdata$sex)
+head(pdata[pdata$age > 21,])
+```
+
+It seems from below that there are 17 females over 40 in the data set,
+but when sub-setting `pdata` to contain just those individuals 19 rows
+are selected. Why? What can we do to correct this?
+
+```{r ALL-subset-NA}
+idx <- pdata$sex == "F" & pdata$age > 40
+table(idx)
+dim(pdata[idx,])
+```
+
+Use the `mol.biol` column to subset the data to contain just
+individuals with 'BCR/ABL' or 'NEG', e.g.,
+
+```{r ALL-BCR/ABL-subset}
+bcrabl <- pdata[pdata$mol.biol %in% c("BCR/ABL", "NEG"),]
+```
+
+The `mol.biol` column is a factor, and retains all levels even after
+subsetting. How might you drop the unused factor levels?
+
+```{r ALL-BCR/ABL-drop-unused}
+bcrabl$mol.biol <- factor(bcrabl$mol.biol)
+```
+
+The `BT` column is a factor describing B- and T-cell subtypes
+
+```{r ALL-BT}
+levels(bcrabl$BT)
+```
+
+How might one collapse B1, B2, ... to a single type B, and likewise
+for T1, T2, ..., so there are only two subtypes, B and T
+
+```{r ALL-BT-recode}
+table(bcrabl$BT)
+levels(bcrabl$BT) <- substring(levels(bcrabl$BT), 1, 1)
+table(bcrabl$BT)
+```
+
+Use `xtabs()` (cross-tabulation) to count the number of samples with
+B- and T-cell types in each of the BCR/ABL and NEG groups
+
+```{r ALL-BCR/ABL-BT}
+xtabs(~ BT + mol.biol, bcrabl)
+```
+
+Use `aggregate()` to calculate the average age of males and females in
+the BCR/ABL and NEG treatment groups.
+
+```{r ALL-aggregate}
+aggregate(age ~ mol.biol + sex, bcrabl, mean)
+```
+
+Use `t.test()` to compare the age of individuals in the BCR/ABL versus
+NEG groups; visualize the results using `boxplot()`. In both cases,
+use the `formula` interface. Consult the help page `?t.test` and re-do
+the test assuming that variance of ages in the two groups is
+identical. What parts of the test output change?
+
+```{r ALL-age}
+t.test(age ~ mol.biol, bcrabl)
+boxplot(age ~ mol.biol, bcrabl)
+```
+
 ## Resources
+
+- [StackOverflow](http://stackoverflow.com/questions/tagged/r) for _R_
+  programming questions; also [R-help]() mailing list.
+
+Publications (General _R_)
+
+<!-- Bibliography -->
+
+[R]: http://r-project.org

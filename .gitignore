@@ -1,0 +1,5 @@
+vignettes/*html
+vignettes/*R
+vignettes/*.md
+vignettes/figure
+vignettes/cache
