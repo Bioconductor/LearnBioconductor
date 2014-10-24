@@ -4,8 +4,8 @@ Learning R / Bioconductor for Sequence Analysis
 Fred Hutchinson Cancer Research Center, Seattle, WA<br />
 October 27-29
 
-Location: October 27 / 28: Arnold Building M1-A305/A307; October 29:
-Weintraub B1-080
+Location: October 27 / 28: Arnold Building M1-A303; October 29:
+Thomas D1-080
 
 Contact: Martin Morgan (content,
 [mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org)); Melissa Alvendia
