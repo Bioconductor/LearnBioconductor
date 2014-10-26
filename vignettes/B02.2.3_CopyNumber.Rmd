@@ -1,0 +1,253 @@
+<!--
+%\VignetteIndexEntry{02.2.1 Copy Number}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+knitr::opts_chunk$set(tidy=FALSE)
+```
+
+# Copy number work flow
+
+Sonali Arora, Martin Morgan<br/>
+October 28, 2014
+
+Copy Number Variation (CNV's) refers to the duplication or deletion of
+DNA segments larger than 1 kb. CNV's are structural variations in the
+genome which range in length between 50 bp and 1 Mbp. They are
+widespread among humans - on an average 12 CNVs exist per individual
+in comparison to the reference genome. They have also been shown to
+play a role in diseases such as autism, breast cancer, obesity,
+Alzheimer’s disease and schizophrenia among other diseases.
+
+## Experimental design
+
+Like any other genomic analysis, before we start a copy Number
+analysis, we need to consider experimental design. Here, we highlight
+two specific pointers that one needs to keep in mind while designing a
+copy number analysis.
+
+**Tumor and normal samples** Are we planning to just find copy number
+profile in individuals? For example, how does the copy number profile
+for a region evolve over a certain period of time? (Here we are
+comparing the copy number profile to a reference genome)
+
+Are we planning to compare copy number profiles from tumor vs normal
+profiles?  For example, we may be trying to find out if copy number
+changes are responsible for a certain form of cancer and want to find
+the exact genomic region against which a treatment can be developed.
+
+There are different packages and different functions inside the same
+package which handle CNV for tumor and normal samples or CNV in
+samples.
+
+**Germ line versus somatic CNV** Germ line CNV are relatively short
+(a few bp to a few Mbp) copy number changes that the individual
+inherits from one of the two parental gametes and thus are typically
+present in 100% of cells.
+
+Somatic CNV (often called CNA where A stands for alterations or aberration) are
+copy number changes of any size and amount (from a few bases to whole 
+chromosomes) that happen (and often carry on happening) in cancer cells. 
+Cancer cells can be aneuploid (that means they are largely triploid, 
+tetraploid or even aploid) and can have high focal amplifications 
+(some regions could have many copies: it is not unusual to have 8-12 copies for 
+some regions). Furthermore, because tumor samples are typically an admixture 
+of normal and cancer cells, the tumor purity in unknown and variable. 
+
+Different algorithms make different assumptions while handling somatic
+or germ line CNV. Typically, germ line cnv caller can assume:
+
+- The genome is largely diploid.
+- The sample is pure and homogeneous.
+- Any gain or loss should be 50% move or 50% less coverage.
+
+For these reasons, the algorithms can focus more on associating
+_p_-values for each call; it is possible to estimate false positive
+and false negative rates.
+
+Somatic CNA callers cannot make any of the assumption above, or if
+they do, they have limited scope.
+  
+## Sequencing technology
+
+Some key questions when thinking about sequencing technology to use
+include:
+
++   What kind of sequencing data are we working with? 
+
+    Is it array CGH data, SNP array or next generation sequencing
+    data? For example, the `r Biocpkg("CGHbase")` detects CNV's in
+    array CGH data whereas the `r Biocpkg("seqCNA")` among others
+    detects CNV's in high-throughput sequencing data.
+  
++   Amount of genome being sequenced - whole genome vs exome?
+
+    Are we looking for copy number across the whole genome or are we
+    looking for copy number only in exomes? Again different packages
+    handle different kind of sequencing data. For example, The
+    _Bioconductor_ package `r Biocpkg("exomeCopy")` detects CNV in
+    exome sequencing data whereas the _Bioconductor_ package 
+    `r Biocpkg("cn.mops")` detects CNV in whole genome sequencing data.
+  
++   Which platform was the sequencing done on?
+
+    A lot of packages detecting CNV on platform-specific data. 
+    For example, the `r Biocpkg("crlmm")` detects CNV's in Affymetrix SNP 5.0 
+    and 6.0 and Illumina arrays whereas the `r Biocpkg("CopyNumber450K")` 
+    detects them in Illumina 450k methylation microarrays. 
+  
++   What is the coverage of sequenced data?
+
+    Most packages work well with high coverage sequencing data, but
+    some packages are designed to work well with low coverage data. It
+    is best to recognize how coverage of our data will affect the
+    choice of the package we use for our analysis at an early stage.
+    
+## Copy number analysis algorithm?
+    
+Since statistics plays a huge role in copy number analysis, we should
+also spend some time in thoroughly understanding the underlying
+algorithm of the _R_ package being used. A few questions to consider
+while choosing a package would be -
+
+1. How is our chosen package binning and counting reads?
+
+2. Is any pre-processing required from our end? Is it trimming aligned
+   reads internally?
+
+3. What segmentation algorithm is being used ? For example, does the
+   package use Circular Binary Segmentation, HMM based methods etc.
+
+4. How efficiently can it handle big data? Do I need additional
+   computational resources to run the analysis? Does the function run
+   in parallel?
+  
+## Available resources in _Bioconductor_ 
+
+_Bioconductor_ currently has about 41 packages for Copy Number
+Analysis.  To find these, one can visit the
+[biocViews](http://bioconductor.org/packages/devel/BiocViews.html#___Software.)
+page and type "CopyNumberVariation" in the "Autocomplete biocViews
+search"
+
+## Workflow using _cn.mops_
+
+Lets work through a small example to illustrate how straight-forward a
+copy number analysis can be once you've figured out all the
+logistics. We will also find the genes that lie within the detected
+copy number regions.
+
+For this analysis, I chose the `r Biocpkg("cn.mops")` package as it
+helps us with
+
+- Detecting germ-line CNVs
+- Works well with low coverage data 
+- Handles both single copy number analysis and tumor vs normal copy
+  number analysis
+- Uses parallel processing internally so we get fast computation
+- Handles whole genome sequencing data
+- Supports _GenomicRanges_ infrastructure which allows easy workflows
+  with other Bioconductor packages.
+
+We start by downloading relevant files, if necessary
+
+```{r cvn-setup-1, cache=FALSE, echo=FALSE}
+destdir <- "./bigdata"
+if (!file.exists(destdir))
+    dir.create(destdir)
+```
+
+```{r cnv-setup-2, message=FALSE}
+## set path/to/download/directory, e.g.,
+## destdir <- "~/bam/copynumber"
+stopifnot(file.exists(destdir))
+
+bamFiles <- file.path(destdir,
+                      c("tumorA.chr4.bam", "normalA.chr4.bam"))
+urls <- paste0("http://s3.amazonaws.com/copy-number-analysis/",
+               basename(bamFiles))
+for (i in seq_along(bamFiles))
+    if (!file.exists(bamFiles[i])) {
+        download.file(urls[i], bamFiles[i])
+        download.file(paste0(urls[i], ".bai"), paste0(bamFiles[i], ".bai"))
+    }
+```
+
+The main work flow 1) loads the library; 2) counts reads; 3)
+normalizes counts; 4) detects CNVs; and 5) visualizes results.
+
+```{r cnv-workflow, message=FALSE}
+## 1. Load the cn.mops package
+suppressPackageStartupMessages({
+    library(cn.mops)
+})
+
+## 2. We can bin and count the reads
+reads_gr <- getReadCountsFromBAM(BAMFiles = bamFiles,
+    sampleNames = c("tumor", "normal"),
+    refSeqName = "chr4", WL = 10000, mode = "unpaired")
+
+## 3. Noramlization
+## We need a special normalization because the tumor has many large CNVs
+X <- normalizeGenome(reads_gr, normType="poisson")
+
+## 4. Detect cnv's
+ref_analysis <- referencecn.mops(X[,1], X[,2],
+     norm=0, 
+     I = c(0.025, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 8, 16, 32, 64), 
+     classes = paste0("CN", c(0:8, 16, 32, 64, 128)),
+     segAlgorithm="DNAcopy")
+resCNMOPS <- calcIntegerCopyNumbers(ref_analysis)
+
+## 5. Visualize the cnv's
+segplot(resCNMOPS)
+```
+
+Here the x-axis represents the genomic position and the y-axis
+represents the log ratio of read counts and copy number call of each
+segment (red)
+
+```{r cnv-regions}
+human_cn <- cnvr(resCNMOPS)
+human_cn
+```
+
+To find the genes that lie in these copy number regions, we will use
+the _TranscriptDb_ object for hg19
+
+```{r cnv-annotate-txdb, message=FALSE}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+## subset to work with only chr4
+txdb <- keepSeqlevels(TxDb.Hsapiens.UCSC.hg19.knownGene, "chr4")
+genes0 <- genes(txdb)
+## 'unlist' so that each range is associated with a single gene identifier
+idx <- rep(seq_along(genes0), elementLengths(genes0$gene_id))
+genes <- granges(genes0)[idx]
+genes$gene_id = unlist(genes0$gene_id)
+```
+
+Next we will use find overlaps to assign gene identifiers to cnv
+regions.
+
+```{r cnv-annotate}
+olaps <- findOverlaps(genes, human_cn, type="within")
+idx <- factor(subjectHits(olaps), levels=seq_len(subjectLength(olaps)))
+human_cn$gene_ids <- splitAsList(genes$gene_id[queryHits(olaps)], idx)
+human_cn
+```
+
+## Session info
+
+The packages and versions used in this work flow are as follows:
+
+```{r cvn-session-info}
+sessionInfo()
+```
