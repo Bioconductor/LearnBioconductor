@@ -463,7 +463,7 @@ Option 1: `fastqc`
 
 1. Start _fastqc_
 
-2. Select fastq.gz files from the File --> Open menu. Files are in
+2. Select fastq files from the File --> Open menu. Files are in
    `/home/ubuntu/fastq
 
 3. Press `OK`
@@ -480,7 +480,7 @@ suppressPackageStartupMessages({
 })
 
 ## 2. create a vector of file paths
-fls <- dir("/home/ubuntu/fastq", pattern="*fastq.gz", full=TRUE)
+fls <- dir("/home/ubuntu/fastq", pattern="*fastq", full=TRUE)
 
 ## 3. collect statistics
 stats <- qa(fls)
