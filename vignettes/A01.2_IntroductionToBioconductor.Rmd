@@ -464,7 +464,7 @@ Option 1: `fastqc`
 1. Start _fastqc_
 
 2. Select fastq files from the File --> Open menu. Files are in
-   `/home/ubuntu/fastq
+   `~/fastq
 
 3. Press `OK`
 
@@ -480,7 +480,7 @@ suppressPackageStartupMessages({
 })
 
 ## 2. create a vector of file paths
-fls <- dir("/home/ubuntu/fastq", pattern="*fastq", full=TRUE)
+fls <- dir("~/fastq", pattern="*fastq", full=TRUE)
 
 ```
 
@@ -527,7 +527,7 @@ Integrative Genomics Viewer
    the screen
 
 4. Use File -> Load from File menu to load a bam file, e.g.,
-   `/home/ubuntu/bam/SRR1039508_sorted.bam`
+   `~/bam/SRR1039508_sorted.bam`
 
 5. Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
    symbol in the box toward the center of the browser window. Adjust
@@ -535,7 +535,7 @@ Integrative Genomics Viewer
 
 ```
 mkdir -p ~/igv/genomes
-cp /home/ubuntu/hg19_alias.tab ~/igv/genomes/
+cp ~/hg19_alias.tab ~/igv/genomes/
 igv
 ```
 
@@ -587,7 +587,7 @@ suppressPackageStartupMessages({
     library(GenomicAlignments)
 })
 
-fl <- "/home/ubuntu/bam/SRR1039508_sorted.bam"
+fl <- "~/bam/SRR1039508_sorted.bam"
 sparcl1gene <- range(sparcl1exons)
 param <- ScanBamParam(which=sparcl1gene)
 aln <- readGAlignmentPairs(fl, param=param)
