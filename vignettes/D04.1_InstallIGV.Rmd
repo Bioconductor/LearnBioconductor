@@ -1,0 +1,80 @@
+<!--
+%\VignetteIndexEntry{04.1 Appendix: Install IGV}
+%\VignettePackage{LearnBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+stopifnot(BiocInstaller::biocVersion() == "3.0")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+## Appendix 1: Installing and using IGV
+
+_NOTE_: All instructions in this document should be performed
+**on your laptop**, not on the RStudio Server AMI.
+
+* We'll first create a directory called "igv" in your
+  home directory. You can determine your home directory by issuing
+  the following command in a Terminal window on Linux or Mac:
+
+    echo $HOME
+
+  On Windows, open a command window by clicking Start, then Run, then 
+  typing `cmd` and pressing Enter. In the window, type
+
+    echo %USERPROFILE%
+
+* So go to the indicated directory, and then issue the command
+  
+    mkdir igv
+
+  That will create an `igv` directory in your home directory.
+
+* Copy the file [hg19_alias.tab](hg19_alias.tab) to this
+directory. 
+This is a simple tab-delimited file that maps between the sequence
+names used by the alignment, and the sequence names known to IGV.
+
+* Install Java if you haven't already. Go to 
+  [https://www.java.com/en/](https://www.java.com/en/) and
+  click on Free Java Download. Download and install.
+
+* Download IGV from [https://www.broadinstitute.org/igv/download](https://www.broadinstitute.org/igv/download). There are several
+ways to do this, the easiest is to click on one of the Java Web Start
+links. Make sure you have more memory available than what is listed below the Launch button. You may need to change the security settings on your
+computer to allow IGV to launch.
+
+* With IGV running, let's change the default genome. It's currently
+  set to Human hg18, so click on the dropdown in the upper left
+  that says "Human hg18". Click on "More..." and then in the
+  `Filter` box, start typing `hg19`. `Human hg19` will then show
+  up in the box and you can double-click on it. We're now using
+  Human hg19 as our default genome.
+
+* You can now open bam files in IGV. Here are the URLs of 
+  BAM files for this class. You can open them by clicking on
+  IGV's `File` menu, then clicking on `Load From URL...`.
+  You can paste one of these URLs into the box and click OK:
+
+<pre>
+
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039508_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039509_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039512_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039513_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039516_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039517_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039520_sorted.bam
+    http://s3-us-west-2.amazonaws.com/oct2014bamfiles/SRR1039521_sorted.bam
+  
+</pre>
+
+  You may see a warning that the bam file does not contain any sequence names which match the current genome. You can ignore this (click OK).
+
+* Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
+   symbol in the box toward the top center of the browser window. Then click `Go`. Adjust
+   the zoom until reads come in to view, and interpret the result.
+

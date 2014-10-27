@@ -516,6 +516,12 @@ annotation package; see the
 
 Integrative Genomics Viewer
 
+_Note_: The following steps happen on **your laptop**, _NOT_ on the
+RStudio Server AMI.
+
+On your laptop, install and open IGV as described 
+[here](D04.1_InstallIGV.html).
+
 1. Create an 'igv' directory (if it does not already exist) and add
    the file hg19_alias.tab to it. This is a simple tab-delimited file
    that maps between the sequence names used by the alignment, and the
