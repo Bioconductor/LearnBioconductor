@@ -24,5 +24,9 @@ Description: This course is directed at beginning and intermediate
     extensive hands-on practicals; students are required to bring a
     laptop with wireless internet access and a modern version of the
     Chrome or Safari web browser.
-Suggests: knitr, BiocStyle, BiocInstaller, MLSeq, cn.mops, 
-    TxDb.Hsapiens.UCSC.hg19.knownGene
+Suggests: knitr, BiocStyle, BiocInstaller, MLSeq, cn.mops,
+        TxDb.Hsapiens.UCSC.hg19.knownGene, ShortRead
+Packaged: 2014-10-27 01:15:21 UTC; dante
+Author: Martin Morgan [aut, cre],
+  Sonali Arora [aut]
+Maintainer: Martin Morgan <mtmorgan@fhcrc.org>
