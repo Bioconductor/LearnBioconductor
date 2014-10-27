@@ -35,7 +35,7 @@ R / Bioconductor resources
 
 ## Copy Number
 
-See the [Copy Number Workflow](./B02.2.3_CopyNumber.html) document.
+See the [Copy Number Workflow](./B02.2.3_CopyNumber.Rmd) document.
 
 ## Epigenomics
 
