@@ -26,7 +26,8 @@ Description: This course is directed at beginning and intermediate
     Chrome or Safari web browser.
 Suggests: knitr, BiocStyle, BiocInstaller, MLSeq, cn.mops,
         TxDb.Hsapiens.UCSC.hg19.knownGene, ShortRead, BiocParallel,
-        dendextend, MLSeq, xtable, Biostrings, GenomicRanges, class
+        dendextend, MLSeq, xtable, Biostrings, GenomicRanges, class,
+        knitr, ALL, RNAseqData.HNRNPC.bam.chr14
 Packaged: 2014-10-27 01:31:35 UTC; dante
 Author: Martin Morgan [aut, cre],
   Sonali Arora [aut]

@@ -208,7 +208,7 @@ Option 1: `fastqc`
 1. Start _fastqc_
 
 2. Select fastq.gz files from the File --> Open menu. Files are in
-   `/home/training/Data/Morgan`
+   `/home/ubuntu/fastq
 
 3. Press `OK`
 
@@ -224,7 +224,7 @@ suppressPackageStartupMessages({
 })
 
 ## 2. create a vector of file paths
-fls <- dir("/home/training/Data/Morgan", pattern="*fastq.gz", full=TRUE)
+fls <- dir("/home/ubuntu/fastq", pattern="*fastq.gz", full=TRUE)
 
 ## 3. collect statistics
 stats <- qa(fls)
@@ -236,7 +236,7 @@ browseURL(report(stats))
 Check out the qa report from all lanes
 
 ```{r ShortRead-qa-all}
-load("/home/training/Data/Morgan/qa_all.Rda")
+load("/home/ubuntu/fastq/qa_all.Rda")
 browseURL(report(qa_all))
 ```
 
@@ -261,7 +261,7 @@ Integrative Genomics Viewer
    the screen
 
 4. Use File -> Load from File menu to load a bam file, e.g.,
-   `/home/training/Data/Morgan/SRR1039508_sorted.bam`
+   `/home/ubuntu/bam/SRR1039508_sorted.bam`
 
 5. Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
    symbol in the box toward the center of the browser window. Adjust
@@ -269,7 +269,7 @@ Integrative Genomics Viewer
 
 ```
 mkdir -p ~/igv/genomes
-cp /home/training/Data/Morgan/hg19_alias.tab ~/igv/genomes/
+cp /home/ubuntu/hg19_alias.tab ~/igv/genomes/
 igv
 ```
 
@@ -321,7 +321,7 @@ suppressPackageStartupMessages({
     library(GenomicAlignments)
 })
 
-fl <- "/home/training/Data/Morgan/SRR1039508_sorted.bam"
+fl <- "/home/ubuntu/bam/SRR1039508_sorted.bam"
 sparcl1gene <- range(sparcl1exons)
 param <- ScanBamParam(which=sparcl1gene)
 aln <- readGAlignmentPairs(fl, param=param)
