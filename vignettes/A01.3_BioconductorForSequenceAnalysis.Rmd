@@ -613,9 +613,11 @@ we will use the command-line version.
 2. Run fastqc on sample fastq files, sending the output to the
 `~/fastqc_report` directory.
 
-    fastqc ~/fastqc/*fastq --outdir=~/fastqc_report
+    fastqc fastq/*fastq --outdir=fastqc_reports
 
-3. Study the quality report and resulting on-line [documentation](FIXME).
+3. Study the quality report and resulting on-line [documentation](FIXME):
+   In the Files tab, click on `fastqc_reports`. Click on the HTML file 
+   there and then click on "View in Web Browser".
 
 `r Biocpkg("ShortRead")` provides similar functionality, but from
 within _R_. The following shows that _R_ can handle large data, and
