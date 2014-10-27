@@ -613,7 +613,7 @@ we will use the command-line version.
 2. Run fastqc on sample fastq files, sending the output to the
 `~/fastqc_report` directory.
 
-    fastqc ~/fastqc/*fastq.gz --outdir=~/fastqc_report
+    fastqc ~/fastqc/*fastq --outdir=~/fastqc_report
 
 3. Study the quality report and resulting on-line [documentation](FIXME).
 
@@ -630,7 +630,7 @@ suppressPackageStartupMessages({
 })
 
 ## 2. create a vector of file paths
-fls <- dir("~/fastq", pattern="*fastq.gz", full=TRUE)
+fls <- dir("~/fastq", pattern="*fastq", full=TRUE)
 
 ## 3. collect statistics
 stats <- qa(fls)
