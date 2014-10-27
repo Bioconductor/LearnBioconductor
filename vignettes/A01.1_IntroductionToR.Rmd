@@ -88,7 +88,7 @@ stopifnot(file.exists(fname))
 pdata <- read.delim(fname)
 ```
 ```{r echo=FALSE}
-fname <- "../inst/extdata/ALLphenoData.tsv"
+fname <- system.file("extdata", "ALLphenoData.tsv", package="LearnBioconductor")
 stopifnot(file.exists(fname))
 pdata <- read.delim(fname)
 ```
