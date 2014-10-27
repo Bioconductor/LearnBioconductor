@@ -16,11 +16,12 @@ Harvard School of Public Health, Boston, US;
 Minor modifications by Martin Morgan, 26 October 2014.
 
 ```{r style, echo=FALSE, results="asis"}
+set.seed(123L)
 options(bitmapType="cairo")
 library("BiocStyle")
 BiocStyle::markdown()
 options(width=100)
-opts_chunk$set(message = FALSE, error = FALSE)
+knitr::opts_chunk$set(message = FALSE, error = FALSE)
 ```
 
 ## Contents
@@ -994,7 +995,7 @@ comparison is plotted on the y-axis and the average of the counts
 normalized by size factor is shown on the x-axis ("M" for minus,
 because a log ratio is equal to log minus log, and "A" for average).
 
-```{r plotma}
+```{r plotma, eval=FALSE}
 plotMA(res, ylim=c(-5,5))
 ```
 
@@ -1012,7 +1013,7 @@ We can label individual points on the MA plot as well. Here we use the
 results object. Within the *with* function, only the `baseMean` and
 `log2FoldChange` values for the selected rows of `res` are used.
 
-```{r plotma2}
+```{r plotma2, eval=FALSE}
 plotMA(res, ylim=c(-5,5))
 with(res[topGene, ], {
   points(baseMean, log2FoldChange, col="dodgerblue", cex=2, lwd=2)

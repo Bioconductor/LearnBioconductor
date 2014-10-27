@@ -1,7 +1,7 @@
 Package: LearnBioconductor
 Type: Package
 Title: Learning R / Bioconductor for Sequence Analysis
-Version: 0.0.3
+Version: 0.1.0
 Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
                     email="mtmorgan@fhcrc.org"),
              person("Sonali", "Arora", role="aut"))
@@ -24,5 +24,10 @@ Description: This course is directed at beginning and intermediate
     extensive hands-on practicals; students are required to bring a
     laptop with wireless internet access and a modern version of the
     Chrome or Safari web browser.
-Suggests: knitr, BiocStyle, BiocInstaller, MLSeq, cn.mops, 
-    TxDb.Hsapiens.UCSC.hg19.knownGene
+Suggests: knitr, BiocStyle, BiocInstaller, ALL,
+    BSgenome.Hsapiens.UCSC.hg19, BiocParallel, Biostrings,
+    GenomicAlignments, GenomicFeatures, Gviz, MLSeq, PoiClaClu,
+    RColorBrewer, RNAseqData.HNRNPC.bam.chr14, Rsamtools, ShortRead,
+    TxDb.Hsapiens.UCSC.hg19.knownGene, VariantAnnotation, airway,
+    class, cn.mops, dendextend, fission, genefilter, ggplot2, gplots,
+    org.Hs.eg.db, sva, xtable
