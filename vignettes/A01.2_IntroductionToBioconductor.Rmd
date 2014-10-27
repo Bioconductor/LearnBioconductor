@@ -486,7 +486,8 @@ fls <- dir("/home/ubuntu/fastq", pattern="*fastq", full=TRUE)
 stats <- qa(fls)
 
 ## 4. generate and browse the report
-browseURL(report(stats))
+if(interactive())
+    browseURL(report(stats))
 ```
 
 Check out the qa report from all lanes
@@ -494,7 +495,8 @@ Check out the qa report from all lanes
 ```{r ShortRead-qa-all}
 load("qa")
 data(qa_all)
-browseURL(report(qa_all))
+if(interactive())
+    browseURL(report(qa_all))
 ```
 
 ## 2. Alignments (and genomic annotations)
