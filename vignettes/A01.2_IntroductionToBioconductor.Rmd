@@ -493,7 +493,6 @@ if(interactive())
 Check out the qa report from all lanes
 
 ```{r ShortRead-qa-all}
-load("qa")
 data(qa_all)
 if(interactive())
     browseURL(report(qa_all))
