@@ -613,7 +613,7 @@ we will use the command-line version.
 2. Run fastqc on sample fastq files, sending the output to the
 `~/fastqc_report` directory.
 
-    fastqc ~/fastqc/*fastq.gz --outdir=/home/mtmorgan/fastqc_report
+    fastqc ~/fastqc/*fastq.gz --outdir=~/fastqc_report
 
 3. Study the quality report and resulting on-line [documentation](FIXME).
 
@@ -630,20 +630,21 @@ suppressPackageStartupMessages({
 })
 
 ## 2. create a vector of file paths
-fls <- dir("/home/training/Data/Morgan", pattern="*fastq.gz", full=TRUE)
+fls <- dir("~/fastq", pattern="*fastq.gz", full=TRUE)
 
 ## 3. collect statistics
 stats <- qa(fls)
 
 ## 4. generate and browse the report
-browseURL(report(stats))
+report(stats)
 ```
 
 Check out the qa report from all lanes
 
 ```{r ShortRead-qa-all}
-load("/home/training/Data/Morgan/qa_all.Rda")
-browseURL(report(qa_all))
+library(LearnBioconductor)
+data(qa_all)
+report(qa_all)
 ```
 
 ### Alignments (and genomic annotations)
@@ -655,30 +656,28 @@ for details
 
 Integrative Genomics Viewer
 
-<!-- FIXME -->
+1. Start IGV and select the "hg19" genome.
 
-1. Create an 'igv' directory (if it does not already exist) and add
-   the file hg19_alias.tab to it. This is a simple tab-delimited file
-   that maps between the sequence names used by the alignment, and the
-   sequence names known to IGV.
+2. The sequence names used in the reference genome differ from those
+   used by IGV to represent the identical genome. We need to map
+   between these different sequence names, following the instructions
+   for
+   [Creating a Chromosome Name Alias File](http://www.broadinstitute.org/software/igv/LoadData/#aliasfile).
 
-2. Start igv.
+   Copy the file `hg19_alias.tab` from the location specified in class
+   into the directory `<user_home>/igv/genomes/`. Restart IGV.
 
-3. Choose hg19 from the drop-down menu at the top left of
+3. Start igv.
+
+4. Choose hg19 from the drop-down menu at the top left of
    the screen
 
-4. Use `File -> Load from URL` menu to load a bam file, e.g.,
-   ``
+5. Use `File -> Load from URL` menu to load a bam file. The URLs will
+   be provided during class.
 
-5. Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
+6. Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
    symbol in the box toward the center of the browser window. Adjust
    the zoom until reads come in to view, and interpret the result.
-
-```
-mkdir -p ~/igv/genomes
-cp /home/training/Data/Morgan/hg19_alias.tab ~/igv/genomes/
-igv
-```
 
 _Bioconductor_: we'll explore how to map between different types of
 identifiers, how to navigate genomic coordinates, and how to query BAM
@@ -729,7 +728,7 @@ files for aligned reads.
         library(GenomicAlignments)
     })
     
-    fl <- "/home/training/Data/Morgan/SRR1039508_sorted.bam"
+    fl <- "~/bam/SRR1039508_sorted.bam"
     sparcl1gene <- range(sparcl1exons)
     param <- ScanBamParam(which=sparcl1gene)
     aln <- readGAlignmentPairs(fl, param=param)
