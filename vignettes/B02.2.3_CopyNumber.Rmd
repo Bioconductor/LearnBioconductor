@@ -5,7 +5,9 @@
 -->
 
 ```{r setup, echo=FALSE}
+options(error=traceback)
 library(LearnBioconductor)
+set.seed(123L)
 stopifnot(BiocInstaller::biocVersion() == "3.0")
 ```
 

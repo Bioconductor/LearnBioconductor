@@ -16,16 +16,16 @@ BiocStyle::markdown()
 # Learning R / Bioconductor for Sequence Analysis
 
 This package contains training material for a Fall, 2014 introductory
-R / Bioconductor course "Learning R / Bioconductor for Sequence
+_R_ / _Bioconductor_ course "Learning _R_ / _Bioconductor_ for Sequence
 Analysis", offered October 27-29, Seattle, WA.
 
 This course is directed at beginning and intermediate users who
 would like an introduction to the analysis and comprehension of
-high-throughput sequence data using R and Bioconductor. Day 1 focuses
-on learning essential background: an introduction to the R programming
-language; central concepts for effective use of Bioconductor software;
+high-throughput sequence data using _R_ and _Bioconductor_. Day 1 focuses
+on learning essential background: an introduction to the _R_ programming
+language; central concepts for effective use of _Bioconductor_ software;
 and an overview of high-throughput sequence analysis work flows. Day 2
-emphasizes use of Bioconductor for specific tasks: an RNA-seq
+emphasizes use of _Bioconductor_ for specific tasks: an RNA-seq
 differential expression work flow; exploratory, machine learning, and
 other statistical tasks; gene set enrichment; and annotation.  Day 3
 transitions to understanding effective approaches for managing larger
@@ -39,22 +39,23 @@ and a modern version of the Chrome or Safari web browser.
 
 ## Schedule (tentative)
 
-Day 1: Learn R / Bioconductor
+Day 1: Learn _R_ / _Bioconductor_
 
-- 9:00 - 10:30 [Introduction to R](A01.1_IntroductionToR.html):
+- 9:00 - 10:30 [Introduction to _R_](A01.1_IntroductionToR.html):
   objects, functions, help!
 - 11:00 - 12:30
-  [Introduction to Bioconductor](A01.2_IntroductionToBioconductor.html):
+  [Introduction to _Bioconductor_](A01.2_IntroductionToBioconductor.html):
   working with packages and classes
 - 1:30 - 5:00 (break: 3:00 - 3:30)
   [Introduction to sequence analysis](A01.3_BioconductorForSequenceAnalysis.html):
   typical work flow; data types and quality assessment; essential
-  Bioconductor packages
+  _Bioconductor_ packages
 
-Day 2: Use R / Bioconductor 
+Day 2: Use _R_ / _Bioconductor_ 
 
 - 9:00 - 12:30 (break: 10:30 - 11:00) An RNA-seq differential
-  expression work flow ([lecture](B02.1_RNASeq.html); practical)
+  expression work flow ([lecture](B02.1_RNASeq.html);
+  [practical](B02.1.1_RNASeqLab.html))
 - 1:30 - 2:00 [Other work flows](B02.2_CommonWorkFlows.html) (survey):
   ChIP-seq, variants, copy number, epigenomics
 - 2:00 - 3:00 [Machine learning](B02.3_MachineLearning.html);

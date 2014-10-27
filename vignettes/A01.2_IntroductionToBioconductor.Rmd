@@ -21,8 +21,6 @@ October 29, 2014
 
 ## Bioconductor
 
-### 3. Bioconductor
-
 Analysis and comprehension of high-throughput genomic data
 
 - Statistical analysis: large data, technological artifacts, designed
@@ -65,8 +63,10 @@ Objects
 Example
 
 ```{r Biostrings, message=FALSE}
-require(Biostrings)                     # Biological sequences
-data(phiX174Phage)                      # sample data, see ?phiX174Phage
+suppressPackageStartupMessages({
+    library(Biostrings)
+})
+data(phiX174Phage)                       # sample data, see ?phiX174Phage
 phiX174Phage
 m <- consensusMatrix(phiX174Phage)[1:4,] # nucl. x position counts
 polymorphic <- which(colSums(m != 0) > 1)
@@ -76,38 +76,300 @@ m[, polymorphic]
 showMethods(class=class(phiX174Phage), where=search())
 ```
 
-<a name="i-granges"></a>
+## Core concepts
 
-Annotation
+### Genomic ranges
 
-- _Bioconductor_ provides extensive access to 'annotation' resources
-  (see the [AnnotationData][] biocViews hierarchy); some interesting
-  examples to explore during this lab include:
-- [biomaRt][], [PSICQUIC][], [KEGGREST][] and other packages for
-  querying on-line resources; each of these have informative vignettes.
-- [AnnotationDbi][] is a cornerstone of the
-  [Annotation Data][AnnotationData] packages provided by Bioconductor.
-  - **org** packages (e.g., [org.Hs.eg.db][]) contain maps between
-    different gene identifiers, e.g., ENTREZ and SYMBOL. The basic
-    interface to these packages is described on the help page `?select`
-  - **TxDb** packages (e.g., [TxDb.Hsapiens.UCSC.hg19.knownGene][])
-    contain gene models (exon coordinates, exon / transcript
-    relationships, etc) derived from common sources such as the hg19
-    knownGene track of the UCSC genome browser. These packages can be
-    queried, e.g., as described on the `?exonsBy` page to retrieve all
-    exons grouped by gene or transcript.
-  - **BSgenome** packages (e.g., [BSgenome.Hsapiens.UCSC.hg19][])
-    contain whole genomes of model organisms.
-- [VariantAnnotation][] and [ensemblVEP][] provide access to sequence
-  annotation facilities, e.g., to identify coding variants; see the
-  [Introduction to VariantAnnotation](http://bioconductor.org/packages/release/bioc/vignettes/ShortRead/inst/doc/Overview.pdf)
-  vignette for a brief introduction.
-- Take a quick look at the [annotation work
-  flow](http://bioconductor.org/help/workflows/annotation/annotation/)
-  on the Bioconductor web site.
+Genomic range
 
-<a name="package-tour"></a>
+- chromosome (`seqnames`), start, end, and optionally strand
+- Coordinates
+    - 1-based
+    - Closed -- start and end coordinates _included_ in range
+    - Left-most -- start is always to the left of end, regardless of
+      strand
 
+Why genomic ranges?
+
+- 'Annotation'
+    - Many genome annotations are range-based
+    - Simple ranges: exons, promoters, transcription factor binding
+      sites, CpG islands, ...
+    - Lists of ranges: gene models (exons-within-transcripts)
+- 'Data'
+    - Reads themselves, or derived data
+    - Simple ranges: ChIP-seq peaks, SNPs, ungapped reads, ...
+    - List of ranges: gapped alignments, paired-end reads, ...
+
+Data objects
+
+- `r Biocpkg("GenomicRanges")`::_GRanges_
+    - `seqnames()`
+    - `start()`, `end()`, `width()`
+    - `strand()`
+    - `mcols()`: 'metadata' associated with each range, stored as a
+      `DataFrame`
+    - Many very useful operations defined on ranges (later)
+
+- `r Biocpkg("GenomicRanges")`::_GRangesList_
+    - List-like (e.g., `length()`, `names()`, `[`, `[[`) <!-- ] -->
+    - Each list element a _GRanges_
+    - Metadata at list and element-list levels
+    - Very easy (fast) to `unlist()` and `relist()`.
+
+- `r Biocpkg("GenomicAlignments")`::_GAlignments_, _GAlignmentsList_,
+  _GAlignemntPairs_; `r Biocpkg("VariantAnnotation")`::_VCF_, _VRanges_
+    - _GRanges_-like objects with more specialized roles
+
+Example: _GRanges_
+
+```{r eg-GRanges}
+## 'Annotation' package; more later...
+suppressPackageStartupMessages({
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+})
+promoters <- promoters(TxDb.Hsapiens.UCSC.hg19.knownGene)
+## 'GRanges' with 2 metadata columns
+promoters
+head(table(seqnames(promoters)))
+table(strand(promoters))
+seqinfo(promoters)
+## vector-like access
+promoters[ seqnames(promoters) %in% c("chr1", "chr2") ]
+## metadata
+mcols(promoters)
+length(unique(promoters$tx_name))
+```
+
+```{r eg-GRangesList}
+## exons, grouped by transcript
+exByTx <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene, "tx", use.names=TRUE)
+## list-like subsetting
+exByTx[1:10]              # also logical, character, ...
+exByTx[["uc001aaa.3"]]    # also numeric
+## accessors return typed-List, e.g., IntegerList
+width(exByTx)
+log10(width(exByTx))
+## 'easy' to ask basic questions, e.g., ...
+hist(unlist(log10(width(exByTx))))         # widths of exons
+exByTx[which.max(max(width(exByTx)))]      # transcript with largest exon
+exByTx[which.max(elementLengths(exByTx))]  # transcript with most exons
+```
+
+There are many neat range-based operations (more later)!
+
+![Range Operations](our_figures/RangeOperations.png)
+
+Some detail
+
+- _GRanges_ and friends use data structures defined in `r Biocpkg("S4Vectors")`, 
+  `r Biocpkg("IRanges")`
+- These data structures can handle relatively large data easily, e.g.,
+  1-10 million ranges
+- Basic concepts are built on _R_'s vector and list; _List_ instances
+  are implemented to be efficient when there are long lists of a few
+  elements each.
+- Takes a little getting used to, but very powerful
+
+### Integrated containers
+
+What is an experiment?
+
+- 'Assays' 
+    - Regions-of-interest x samples
+    - E.g., read counts, expression values
+- Regions-of-interest
+    - Microarrays: probeset or gene identifiers
+    - Sequencing: genomic ranges
+- Samples
+    - Experimental inforamtion, covariates
+- Overall experimental description    
+
+Why integrate?
+
+- Avoid errors when manipulating data
+- Case study: [reproducible research]()
+
+Data objects
+
+- `r Biocpkg("Biobase")`::_ExpressionSet_
+    - Assays (`exprs()`): matrix of expression values
+    - Regions-of-interest (`featureData(); fData()`): probeset or gene
+      identifiers
+    - Samples (`phenoData(); pData()`: `data.frame` of relevant
+      information
+    - Experiment data (`exptData()`): Instance of class `MIAME`.
+- `r Biocpkg("GenomicRanges")`::_SummarizedExperiment_
+    - Assays (`assay(), assays()`): arbitrary matrix-like object
+    - Regions-of-interest (`rowData()`): `GRanges` or `GRangesList`;
+      use `GRangesList` with names and 0-length elements to represent
+      assays without ranges.
+    - Samples (`colData()`): `DataFrame` of relevant information.
+    - Experiment data (`exptData()`): `List` of arbitrary information.
+
+![SummarizedExperiment](our_figures/SummarizedExperiment.png)
+
+Example: `ExpressionSet` (see vignettes in `r Biocpkg("Biobase")`).
+
+```{r eg-ExpressionSet}
+suppressPackageStartupMessages({
+    library(ALL)
+})
+data(ALL)
+ALL
+## 'Phenotype' (sample) and 'feature' data
+head(pData(ALL))
+head(featureNames(ALL))
+## access to pData columns; matrix-like subsetting; exprs()
+ALL[, ALL$sex %in% "M"]
+range(exprs(ALL))
+## 30% 'most variable' features (c.f., genefilter::varFilter)
+iqr <- apply(exprs(ALL), 1, IQR)
+ALL[iqr > quantile(iqr, 0.7), ]
+```
+    
+Example: `SummarizedExperiment` (see vignettes in `r Biocpkg("GenomicRanges")`).
+
+```{r eg-SummarizedExperiment}
+
+suppressPackageStartupMessages({
+    library(airway)
+})
+data(airway)
+airway
+## column and row data
+colData(airway)
+rowData(airway)
+## access colData; matrix-like subsetting; assay() / assays()
+airway[, airway$dex %in% "trt"]
+head(assay(airway))
+assays(airway)
+## library size
+colSums(assay(airway))
+hist(rowMeans(log10(assay(airway))))
+```
+
+## Lab
+
+### GC content
+    
+1.  Calculate the GC content of human chr1 in the hg19 build,
+    excluding regions where the sequence is "N". You will need to
+
+    1. Load the `{r Biocannopkg("BSgenome.Hsapiens.UCSC.hg19")}`
+    2. Extract, using `[[`, chromosome 1 ("chr1"). <!-- ]] -->
+    3. Use `alphabetFrequency()` to calculate the count or frequency
+       of the nucleotides in chr1
+    4. Use standard _R_ functions to calculate the GC content.
+
+    ```{r gc-reference}
+    library(BSgenome.Hsapiens.UCSC.hg19)
+    chr1seq <- BSgenome.Hsapiens.UCSC.hg19[["chr1"]]
+    chr1alf <- alphabetFrequency(chr1seq)
+    chr1gc <- sum(chr1alf[c("G", "C")]) / sum(chr1alf[c("A", "C", "G", "T")])
+    ```
+    
+2.  Calculate the GC content of 'exome' (approximately, all genic
+    regions) on chr1. You will need to
+
+    1. Load the `{r Biocannopkg("TxDb.Hsapiens.UCSC.hg19.knownGene")}`
+       package.
+    2. Use `genes()` to extract genic regions of all genes, then
+       subsetting operations to restrict to chromosome 1.
+    3. Use `getSeq,BSgenome-method` to extract sequences from
+       chromosome 1 of the BSgenome object.
+    4. Use `alphabetFrequency()` (with the argument `collapse=TRUE` --
+       why?) and standard _R_ operations to extract the gc content of
+       the genes.
+    
+    ```{r gc-exons-1}
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    genes <- genes(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    genes1 <- genes[seqnames(genes) %in% "chr1"]
+    seq1 <- getSeq(BSgenome.Hsapiens.UCSC.hg19, genes1)
+    alf1 <- alphabetFrequency(seq1, collapse=TRUE)
+    gc1 <- sum(alf1[c("G", "C")]) / sum(alf1[c("A", "C", "G", "T")])
+    ```
+    
+    How does the GC content just calculated compare to the average of
+    the GC content of each exon? Answer this using
+    `alphabetFrequency()` but with `collapse=FALSE)`, and adjust the
+    calculation of GC content to act on a matrix, rather than
+    vector. Why are these numbers different?
+    
+    ```{r gc-exons-2}
+    alf2 <- alphabetFrequency(seq1, collapse=FALSE)
+    gc2 <- rowSums(alf2[, c("G", "C")]) / rowSums(alf2[,c("A", "C", "G", "T")])
+    ```
+    
+3.  Plot a histogram of per-gene GC content, annotating with
+    information about chromosome and exome GC content. Use base
+    graphics `hist()`, `abline()`, `plot(density(...))`,
+    `plot(ecdf(...))`, etc. (one example is below). If this is too
+    easy, prepare a short presentation for the class illustrating how
+    to visualize this type of information using another _R_ graphics
+    package, e.g., `r CRANpkg("ggplot2")`, `{r CRANpkg("ggvis")`, or
+    `{r CRANpkg("lattice")}.
+    
+    ```{r gc-denisty}
+    plot(density(gc2))
+    abline(v=c(chr1gc, gc1), col=c("red", "blue"), lwd=2)
+    ```
+
+### Integrated containers
+
+This exercise illustrates how integrated containers can be used to
+effectively manage data; it does _NOT_ represent a suitable way to
+analyze RNASeq differential expression data.
+
+1. Load the `{r Biocpkg("airway")}` package and `airway` data
+   set. Explore it a litte, e.g., determining its dimensions (number
+   of regions of interest and samples), the information describing
+   samples, and the range of values in the `count` assay. The data are
+   from an RNA-seq experiment. The `colData()` describe treatment
+   groups and other information. The `assay()` is the (raw) number of
+   short reads overlapping each region of interest, in each
+   sample. The solution to this exercise is summarized above.
+
+2.  Create a subset of the data set that contains only the 30% most
+    variable (using IQR as a metric) observations. Plot the
+    distribution of asinh-transformed (a log-like transformation,
+    except near 0) row mean counts
+
+    ```{r airway-plot}
+    iqr <- apply(assay(airway), 1, IQR)
+    airway1 <- airway[iqr > quantile(iqr, 0.7),]
+    plot(density(rowMeans(asinh(assay(airway1)))))
+    ```
+
+3.  Use the `{r Biocpkg("genefilter")` package `rowttests` function
+    (consult it's help page!) to compare asinh-transformed read counts
+    between the two `dex` treatment groups for each row. Explore the
+    result in various ways, e.g., finding the 'most' differentially
+    expressed genes, the genes with largest (absolute) difference
+    between treatment groups, adding adjusted _P_ values (via
+    `p.adjust()`, in the _stats_ package), etc. Can you obtain the
+    read counts for each treatment group, for the most differentially
+    expressed gene?
+
+    ```{r airway-rowttest}
+    suppressPackageStartupMessages({
+        library(genefilter)
+    })
+    ttest <- rowttests(asinh(assay(airway1)), airway1$dex)
+    ttest$p.adj <- p.adjust(ttest$p.value, method="BH")
+    ttest[head(order(ttest$p.adj)),]
+    split(assay(airway1)[order(ttest$p.adj)[1], ], airway1$dex)
+    ```
+    
+4.  Add the statistics of differential expression to the `airway1`
+    _SummarizedExperiment_. Confirm that the statistics have been
+    added.
+    
+    ```{r airway-merge}
+    mcols(rowData(airway1)) <- ttest
+    head(mcols(airway1))
+    ```
 
 # Resources
 
@@ -133,16 +395,11 @@ Publications (General _Bioconductor_)
   Software for Computing and Annotating Genomic Ranges. PLoS Comput
   Biol 9(8): e1003118. doi:
   [10.1371/journal.pcbi.1003118][GRanges.bib]
-- Lawrence, M, and Morgan, M. 2014. Scalable Genomics with R and
-  Bioconductor. Statistical Science 2014, Vol. 29, No. 2,
-  214-226. [http://arxiv.org/abs/1409.2864v1][Scalable.bib]
 
 Other
 
 - Lawrence, M. 2014. Software for Enabling Genomic Data
   Analysis. Bioc2014 conference [slides][Lawrence.bioc2014.bib].
-
-<!-- Bibliography -->
 
 [R]: http://r-project.org
 [Bioconductor]: http://bioconductor.org
@@ -150,7 +407,6 @@ Other
 [Scalable.bib]: http://arxiv.org/abs/1409.2864
 [Lawrence.bioc2014.bib]:
     http://bioconductor.org/help/course-materials/2014/BioC2014/Lawrence_Talk.pdf
-
 
 [AnnotationData]: http://bioconductor.org/packages/release/BiocViews.html#___AnnotationData
 [AnnotationDbi]: http://bioconductor.org/packages/release/bioc/html/AnnotationDbi.html
