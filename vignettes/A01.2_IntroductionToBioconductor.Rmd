@@ -492,7 +492,8 @@ browseURL(report(stats))
 Check out the qa report from all lanes
 
 ```{r ShortRead-qa-all}
-load("/home/ubuntu/fastq/qa_all.Rda")
+load("qa")
+data(qa_all)
 browseURL(report(qa_all))
 ```
 
