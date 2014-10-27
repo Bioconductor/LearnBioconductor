@@ -482,12 +482,20 @@ suppressPackageStartupMessages({
 ## 2. create a vector of file paths
 fls <- dir("/home/ubuntu/fastq", pattern="*fastq", full=TRUE)
 
+```
+
+```{r fakestats, eval=FALSE}
 ## 3. collect statistics
-stats <- qa(fls)
+stats0 <- qa(fls)
+```
+
+```{r realstats, echo=FALSE, results="hide"}
+stats0 <- data(stats0)
+```
 
 ## 4. generate and browse the report
 if(interactive())
-    browseURL(report(stats))
+    browseURL(report(stats0))
 ```
 
 Check out the qa report from all lanes
