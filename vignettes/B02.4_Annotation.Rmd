@@ -11,7 +11,6 @@ stopifnot(BiocInstaller::biocVersion() == "3.0")
 
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
-knitr::opts_chunk$set(cache=TRUE)
 ```
 
 # Annotating Genes, Genomes, and Variants
@@ -238,7 +237,7 @@ eid <- select(org.Hs.eg.db, "BRCA1", "ENTREZID", "SYMBOL")[["ENTREZID"]]
 
 Map from Entrez gene identifier to transcript name
 
-```{r entrez-to-tx, message=FALSE}
+```{r entrez-to-tx, messages=FALSE}
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 txid <- select(txdb, eid, "TXNAME", "GENEID")[["TXNAME"]]

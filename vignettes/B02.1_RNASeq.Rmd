@@ -6,7 +6,7 @@
 
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
-knitr::opts_chunk$set(cache=TRUE, tidy=FALSE)
+knitr::opts_chunk$set(tidy=FALSE)
 ```
 
 ```{r setup, echo=FALSE}

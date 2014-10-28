@@ -11,7 +11,7 @@ stopifnot(BiocInstaller::biocVersion() == "3.0")
 
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
-knitr::opts_chunk$set(cache=TRUE, tidy=FALSE)
+knitr::opts_chunk$set(tidy=FALSE)
 ```
 
 # Bioconductor for Sequence Analysis
@@ -642,12 +642,12 @@ stats0 <- qa(fls)
 ```
 
 ```{r realstats, echo=FALSE, results="hide"}
-stats0 <- data(stats0)
+data(stats0)
 ```
 
 ```{r browseStats}
 ## 4. generate and browse the report
-if(interactive())
+if (interactive())
     browseURL(report(stats0))
 ```
 
@@ -655,7 +655,7 @@ Check out the qa report from all lanes
 
 ```{r ShortRead-qa-all}
 data(qa_all)
-if(interactive())
+if (interactive())
     browseURL(report(qa_all))
 ```
 
@@ -716,7 +716,7 @@ files for aligned reads.
 4. What questions can you easily answer about these alignments? E.g.,
    how many reads overlap this region of interest?
 
-    ```{r setup-view, message=FALSE, warning=FALSE, cache=FALSE}
+    ```{r setup-view, message=FALSE, warning=FALSE}
     ## 1.a 'Annotation' packages
     suppressPackageStartupMessages({
         library(TxDb.Hsapiens.UCSC.hg19.knownGene)
@@ -751,7 +751,7 @@ files for aligned reads.
    transcripts that belong to our gene, and then exons grouped by
    transcript
 
-    ```{r compatibleAlignments, warning=FALSE, cache=FALSE}
+    ```{r compatibleAlignments, warning=FALSE}
     ## 5.a. exons-by-transcript for our gene of interest
     txids <- select(TxDb.Hsapiens.UCSC.hg19.knownGene, sym2eg$ENTREZID,
         "TXID", "GENEID")$TXID
@@ -769,7 +769,7 @@ files for aligned reads.
    sequence from the appropriate reference genome. Translating the
    coding sequences to proteins.
 
-    ```{r coding-sequence, warning=FALSE, cache=FALSE}
+    ```{r coding-sequence, warning=FALSE}
     ## reset seqlevels
     restoreSeqlevels(TxDb.Hsapiens.UCSC.hg19.knownGene)
     

@@ -161,8 +161,8 @@ helps us with
 
 We start by downloading relevant files, if necessary
 
-```{r cvn-setup-1, cache=FALSE, echo=FALSE}
-destdir <- "./bigdata"
+```{r cvn-setup-1, echo=FALSE}
+destdir <- "~/bigdata"
 if (!file.exists(destdir))
     dir.create(destdir)
 ```
@@ -251,5 +251,6 @@ human_cn
 The packages and versions used in this work flow are as follows:
 
 ```{r cvn-session-info}
+restoreSeqlevels(TxDb.Hsapiens.UCSC.hg19.knownGene)
 sessionInfo()
 ```
