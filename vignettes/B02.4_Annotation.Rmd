@@ -355,6 +355,12 @@ plot(score ~ chromStart, ucscTable, pch="+")
 abline(v=start(roi) + (end(roi) - start(roi) + 1) / 2, col="blue")
 ``` 
 
+## Variants
+
+Follow the
+[Variants](http://bioconductor.org/help/workflows/variants/) work
+flow.
+
 [AnnotationHub]: http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html
 [BSgenome]: http://bioconductor.org/packages/release/bioc/html/BSgenome.html
 [Bsgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/release/data/annotation/html/Bsgenome.Hsapiens.UCSC.hg19.html

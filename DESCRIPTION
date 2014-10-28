@@ -1,7 +1,7 @@
 Package: LearnBioconductor
 Type: Package
 Title: Learning R / Bioconductor for Sequence Analysis
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
                     email="mtmorgan@fhcrc.org"),
              person("Sonali", "Arora", role="aut"))
