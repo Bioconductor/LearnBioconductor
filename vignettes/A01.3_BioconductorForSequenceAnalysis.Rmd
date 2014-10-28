@@ -645,6 +645,7 @@ stats0 <- qa(fls)
 stats0 <- data(stats0)
 ```
 
+```{r browseStats}
 ## 4. generate and browse the report
 if(interactive())
     browseURL(report(stats0))
