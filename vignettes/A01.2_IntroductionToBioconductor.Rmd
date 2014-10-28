@@ -256,7 +256,7 @@ hist(rowMeans(log10(assay(airway))))
 1.  Calculate the GC content of human chr1 in the hg19 build,
     excluding regions where the sequence is "N". You will need to
 
-    1. Load the `{r Biocannopkg("BSgenome.Hsapiens.UCSC.hg19")}`
+    1. Load the `r Biocannopkg("BSgenome.Hsapiens.UCSC.hg19")`
     2. Extract, using `[[`, chromosome 1 ("chr1"). <!-- ]] -->
     3. Use `alphabetFrequency()` to calculate the count or frequency
        of the nucleotides in chr1
@@ -272,7 +272,7 @@ hist(rowMeans(log10(assay(airway))))
 2.  Calculate the GC content of 'exome' (approximately, all genic
     regions) on chr1. You will need to
 
-    1. Load the `{r Biocannopkg("TxDb.Hsapiens.UCSC.hg19.knownGene")}`
+    1. Load the `r Biocannopkg("TxDb.Hsapiens.UCSC.hg19.knownGene")`
        package.
     2. Use `genes()` to extract genic regions of all genes, then
        subsetting operations to restrict to chromosome 1.
@@ -322,7 +322,7 @@ This exercise illustrates how integrated containers can be used to
 effectively manage data; it does _NOT_ represent a suitable way to
 analyze RNASeq differential expression data.
 
-1. Load the `{r Biocpkg("airway")}` package and `airway` data
+1. Load the `r Biocpkg("airway")` package and `airway` data
    set. Explore it a litte, e.g., determining its dimensions (number
    of regions of interest and samples), the information describing
    samples, and the range of values in the `count` assay. The data are
@@ -342,7 +342,7 @@ analyze RNASeq differential expression data.
     plot(density(rowMeans(asinh(assay(airway1)))))
     ```
 
-3.  Use the `{r Biocpkg("genefilter")` package `rowttests` function
+3.  Use the `r Biocpkg("genefilter")` package `rowttests` function
     (consult it's help page!) to compare asinh-transformed read counts
     between the two `dex` treatment groups for each row. Explore the
     result in various ways, e.g., finding the 'most' differentially

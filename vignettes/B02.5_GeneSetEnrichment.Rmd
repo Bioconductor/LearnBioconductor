@@ -18,8 +18,6 @@ BiocStyle::markdown()
 Martin Morgan<br/>
 October 28, 2014
 
-## Approaches to Gene Set Enrichment
-
-## R / Bioconductor resources
-
-## Lab
+My overview of approaches to [gene set
+enrichment](http://bioconductor.org/help/course-materials/2013/EMBOBGI/GeneSetEnrichment.pdf),
+with a sketch of relevant _Bioconductor_ packages.

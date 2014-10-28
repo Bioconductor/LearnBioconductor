@@ -11,16 +11,358 @@ stopifnot(BiocInstaller::biocVersion() == "3.0")
 
 ```{r style, echo = FALSE, results = 'asis'}
 BiocStyle::markdown()
+knitr::opts_chunk$set(cache=TRUE)
 ```
 
 # Annotating Genes, Genomes, and Variants
 
-## Gene-centric
+Martin Morgan<br/>
+October 28, 2014
 
-## Genome-centric
+```{r pkgs, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+options(max.print=1000)
+suppressPackageStartupMessages({
+    library(org.Hs.eg.db)
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+    library(BSgenome.Hsapiens.UCSC.hg19)
+    library(GenomicRanges)
+    library(biomaRt)
+    library(rtracklayer)
+})
+```
 
-## Genome-scale resources -- `r Biocpkg('AnnotationHub')`
+## Gene annotation
 
-## Variants
+### Data packages
 
-## Lab
+Organism-level ('org') packages contain mappings between a central
+identifier (e.g., Entrez gene ids) and other identifiers (e.g. GenBank
+or Uniprot accession number, RefSeq id, etc.).  The name of an org
+package is always of the form `org.<Sp>.<id>.db`
+(e.g. [org.Sc.sgd.db][]) where `<Sp>` is a 2-letter abbreviation of
+the organism (e.g. `Sc` for *Saccharomyces cerevisiae*) and `<id>` is
+an abbreviation (in lower-case) describing the type of central
+identifier (e.g. `sgd` for gene identifiers assigned by the
+*Saccharomyces* Genome Database, or `eg` for Entrez gene ids).  The
+"How to use the '.db' annotation packages" vignette in the
+[AnnotationDbi][] package (org packages are only one type of ".db"
+annotation packages) is a key reference.  The '.db' and most other
+Bioconductor annotation packages are updated every 6 months.
+
+Annotation packages usually contain an object named after the package
+itself.  These objects are collectively called `AnnotationDb` objects,
+with more specific classes named `OrgDb`, `ChipDb` or `TranscriptDb`
+objects.  Methods that can be applied to these objects include
+`cols()`, `keys()`, `keytypes()` and `select()`.  Common operations
+for retrieving annotations are summarized in the table.
+
+| Category   | Function                              | Description                                                      |
+|------------|---------------------------------------|------------------------------------------------------------------|
+| Discover   | `columns()`                           | List the kinds of columns that can be returned                   |
+|            | `keytypes()`                          | List columns that can be used as keys                            |
+|            | `keys()`                              | List values that can be expected for a given keytype             |
+|            | `select()`                            | Retrieve annotations matching `keys`, `keytype` and `columns`    |
+| Manipulate | `setdiff()`, `union()`, `intersect()` | Operations on sets                                               |
+|            | `duplicated()`, `unique()`            | Mark or remove duplicates                                        |
+|            | `%in%`,  `match()`        | Find matches                                                     |
+|            | `any()`, `all()`                      | Are any `TRUE`?  Are all?                                        |
+|            | `merge()`                             | Combine two different \Robject{data.frames} based on shared keys |
+| `GRanges*` | `transcripts()`, `exons()`, `cds()`   | Features (transcripts, exons, coding sequence) as `GRanges`.     |
+|            | `transcriptsBy()` , `exonsBy()`       | Features group by  gene, transcript, etc., as `GRangesList`.     |
+|            | `cdsBy()`                             |                                                                  |
+
+**Exercise**: This exercise illustrates basic use of the `select'
+interface to annotation packages.
+
+1. What is the name of the org package for *Homo sapiens*?  Load it.
+   Display the `OrgDb` object for the [org.Hs.eg.db][] package.  Use
+   the `columns()` method to discover which sorts of annotations can
+   be extracted from it.
+2. Use the `keys()` method to extract ENSEMBL identifiers and then
+   pass those keys in to the `select()` method in such a way that you
+   extract the SYMBOL (gene symbol) and GENENAME information for
+   each. Use the following ENSEMBL ids.
+
+```{r select-setup}
+ensids <- c("ENSG00000130720", "ENSG00000103257", "ENSG00000156414", 
+            "ENSG00000144644", "ENSG00000159307", "ENSG00000144485")
+```
+
+**Solution** The `OrgDb` object is named `org.Hs.eg.db`.
+```{r select}
+library(org.Hs.eg.db)
+keytypes(org.Hs.eg.db)
+columns(org.Hs.eg.db)
+cols <- c("SYMBOL", "GENENAME")
+select(org.Hs.eg.db, keys=ensids, columns=cols, keytype="ENSEMBL")
+```
+
+### Internet resources
+
+A short summary of select Bioconductor packages enabling web-based
+queries is in following Table.
+
+| Package                                             | Description                               |
+|-----------------------------------------------------|-------------------------------------------|
+| [AnnotationHub][]                                   | Ensembl, Encode, dbSNP, UCSC data objects |
+| [biomaRt](http://biomart.org)                       | Ensembl and other annotations             |
+| [PSICQUIC](https://code.google.com/p/psicquic)      | Protein interactions                      |
+| [uniprot.ws](http://uniprot.org)                    | Protein annotations                       |
+| [KEGGREST](http://www.genome.jp/kegg)               | KEGG pathways                             |
+| [SRAdb](http://www.ncbi.nlm.nih.gov/sra)            | Sequencing experiments.                   |
+| [rtracklayer](http://genome.ucsc.edu)               | genome tracks.                            |
+| [GEOquery](http://www.ncbi.nlm.nih.gov/geo/)        | Array and other data                      |
+| [ArrayExpress](http://www.ebi.ac.uk/arrayexpress/)] | Array and other data                      |
+
+*Using biomaRt*
+
+The [biomaRt][] package offers access to the online
+[biomart](http://www.biomart.org) resource. this consists of several
+data base resources, referred to as 'marts'.  Each mart allows access
+to multiple data sets; the [biomaRt][] package provides methods for
+mart and data set discovery, and a standard method `getBM()` to
+retrieve data.
+
+*Exercise*
+
+1. Load the [biomaRt][] package and list the available marts.  Choose
+   the *ensembl* mart and list the datasets for that mart.  Set up a
+   mart to use the *ensembl* mart and the *hsapiens gene ensembl*
+   dataset.
+2. A [biomaRt][] dataset can be accessed via `getBM()`. In addition to
+   the mart to be accessed, this function takes filters and attributes
+   as arguments.  Use `filterOptions()` and `listAttributes()` to
+   discover values for these arguments.  Call `getBM()` using filters
+   and attributes of your choosing.
+
+*Solution*
+```{r biomaRt1, eval=FALSE, results="hide"}
+## NEEDS INTERNET ACCESS !!
+library(biomaRt)
+head(listMarts(), 3)                      ## list the marts
+head(listDatasets(useMart("ensembl")), 3) ## mart datasets
+ensembl <-                                ## fully specified mart
+    useMart("ensembl", dataset = "hsapiens_gene_ensembl")
+
+head(listFilters(ensembl), 3)             ## filters
+myFilter <- "chromosome_name"
+substr(filterOptions(myFilter, ensembl), 1, 50) ## return values
+myValues <- c("21", "22")
+head(listAttributes(ensembl), 3)          ## attributes
+myAttributes <- c("ensembl_gene_id","chromosome_name")
+
+## assemble and query the mart
+res <- getBM(attributes =  myAttributes, filters =  myFilter,
+             values =  myValues, mart = ensembl)
+```
+
+*Exercise*
+
+As an optional exercise, annotate the genes that are differentially
+expressed in the DESeq2 laboratory, e.g., find the \texttt{GENENAME}
+associated with the five most differentially expressed genes. Do these
+make biological sense? Can you `merge()` the annotation results with
+the `top table' results to provide a statistically and biologically
+informative summary?
+
+## Genome annotation
+
+There are a diversity of packages and classes available for
+representing large genomes. Several include:
+
+- 'TxDb.*' For transcript and other genome / coordinate annotation.
+- [BSgenome][] For whole-genome representation. See
+  `available.packages()` for pre-packaged genomes, and the vignette
+  'How to forge a BSgenome data package' in the
+- [Homo.sapiens][] For integrating 'TxDb*' and 'org.*' packages.
+- 'SNPlocs.*' For model organism SNP locations derived from dbSNP.
+- `FaFile()` ([Rsamtools][]) for accessing indexed FASTA files.
+- 'SIFT.*', 'PolyPhen', 'ensemblVEP' Variant effect scores.
+
+### Transcript annotation packages
+
+Genome-centric packages are very useful for annotations involving
+genomic coordinates. It is straight-forward, for instance, to discover
+the coordinates of coding sequences in regions of interest, and from
+these retrieve corresponding DNA or protein coding sequences. Other
+examples of the types of operations that are easy to perform with
+genome-centric annotations include defining regions of interest for
+counting aligned reads in RNA-seq experiments and retrieving DNA
+sequences underlying regions of interest in ChIP-seq analysis, e.g.,
+for motif characterization.
+
+*Exercise*
+
+This exercise uses annotation resources to go from a gene symbol
+'BRCA1' through to the genomic coordinates of each transcript
+associated with the gene, and finally to the DNA sequences of the
+transcripts.
+
+1. Use the [org.Hs.eg.db][] package to map from the gene symbol
+   'BRCA1' to its Entrez identifier. Do this using the `select`
+   command.
+2. Use the [TxDb.Hsapiens.UCSC.hg19.knownGene][] package to retrieve
+   the transcript names (`TXNAME`) corresponding to the BRCA1 Entrez
+   identifier. (The 'org\*' packages are based on information from
+   NCBI, where Entrez identifiers are labeled ENTREZID; the 'TxDb*'
+   package we are using is from UCSC, where Entrez identifiers are
+   labelled GENEID).
+3. Use the `cdsBy()` function to retrieve the genomic coordinates of
+   all coding sequences grouped by transcript, and select the
+   transcripts corresponding to the identifiers we're interested
+   in. The coding sequences are returned as an `GRangesList`, where
+   each element of the list is a `GRanges` object representing the
+   exons in the coding sequence. As a sanity check, ensure that the
+   sum of the widths of the exons in each coding sequence is evenly
+   divisble by 3 (the R 'modulus' operator `%%` returns the remainder
+   of the division of one number by another, and might be helpful in
+   this case).
+
+4. Visualize the transcripts in genomic coordinates using the [Gviz][]
+   package to construct an `AnnotationTrack`, and plotting it using
+   `plotTracks()`.
+
+5. Use the [Bsgenome.Hsapiens.UCSC.hg19][] package and
+   `extractTranscriptSeqs()` function to extract the DNA sequence of
+   each transcript.
+
+
+*Solution*
+
+Retrieve the Entrez identifier corresponding to the BRCA1 gene symbol
+
+```{r symbol-to-entrez}
+library(org.Hs.eg.db)
+eid <- select(org.Hs.eg.db, "BRCA1", "ENTREZID", "SYMBOL")[["ENTREZID"]]
+```
+
+Map from Entrez gene identifier to transcript name
+
+```{r entrez-to-tx, message=FALSE}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+txid <- select(txdb, eid, "TXNAME", "GENEID")[["TXNAME"]]
+```
+
+Retrieve all coding sequences grouped by transcript, and select those
+matching the transcript ids of interest, verifying that each coding
+sequence width is a multiple of 3
+
+```{r tx-to-cds-coords}
+cds <- cdsBy(txdb, by="tx", use.names=TRUE)
+brca1cds <- cds[names(cds) %in% txid]
+class(brca1cds)
+length(brca1cds)
+brca1cds[[1]]                           # exons in cds
+cdswidth <- width(brca1cds)             # width of each exon
+all((sum(cdswidth) %% 3) == 0)          # sum within cds, modulus 3
+```
+
+Visualize the BRCA1 transcirpts using [Gviz][] (this package has an
+excellent vignette, `vignette("Gviz")`)
+
+```{r Gviz, message=FALSE}
+require(Gviz)
+anno <- AnnotationTrack(brca1cds)
+plotTracks(list(GenomeAxisTrack(), anno))
+```
+
+Extract the coding sequences of each transcript
+
+```{r cds-to-seq}
+library(BSgenome.Hsapiens.UCSC.hg19)
+genome <- BSgenome.Hsapiens.UCSC.hg19
+tx_seq <- extractTranscriptSeqs(genome, brca1cds)
+tx_seq
+```
+
+Intron coordinates can be identified by first calculating the range of
+the genome (from the start of the first exon to the end of the last
+exon) covered by each transcript, and then taking the (algebraic) set
+difference between this and the genomic coordinates covered by each
+exon
+
+```{r introns}
+introns <- psetdiff(range(brca1cds), brca1cds)
+```
+
+Retrieve the intronic sequences with `getSeq()` (these are *not*
+assembled, the way that `extractTranscriptSeqs()` assembles exon
+sequences into mature transcripts); note that introns start and end
+with the appropriate acceptor and donor site sequences.
+
+```{r intron-seqs}
+seq <- getSeq(genome, introns)
+names(seq)
+seq[["uc010whl.2"]]                     # 21 introns
+```
+
+### [rtracklayer][]
+
+The [rtracklayer][] package allows us to query the UCSC genome
+browser, as well as providing `import()` and
+`export()` functions for common annotation file formats like
+GFF, GTF, and BED.
+
+*Exercise*
+
+Here we use [rtracklayer][] to retrieve estrogen receptor
+binding sites identified across cell lines in the ENCODE project. We
+  focus on binding sites in the vicinity of a particularly interesting
+  region of interest.
+
+1. Define our region of interest by creating a `GRanges` instance with
+   appropriate genomic coordinates. Our region corresponds to 10Mb up-
+   and down-stream of a particular gene.
+2. Create a session for the UCSC genome browser
+3. Query the UCSC genome browser for ENCODE estrogen receptor
+   ERalpha$_a$ transcription marks; identifying the appropriate track,
+   table, and transcription factor requires biological knowledge and
+   detective work.
+4. Visualize the location of the binding sites and their scores;
+   annotate the mid-point of the region of interest.
+
+*Solution*
+
+Define the region of interest
+
+```{r rtracklayer-roi}
+library(GenomicRanges)
+roi <- GRanges("chr10", IRanges(92106877, 112106876, names="ENSG00000099194"))
+``` 
+
+Create a session
+
+```{r rtracklayer-session}
+library(rtracklayer) 
+session <- browserSession()
+``` 
+
+Query the UCSC for a particular track, table, and transcription
+factor, in our region of interest
+
+```{r rtracklayer-marks}
+trackName <- "wgEncodeRegTfbsClusteredV2"
+tableName <- "wgEncodeRegTfbsClusteredV2"
+trFactor <- "ERalpha_a"
+ucscTable <- getTable(ucscTableQuery(session, track=trackName,
+    range=roi, table=tableName, name=trFactor))
+``` 
+
+Visualize the result
+
+```{r rtracklayer-plot, fig.height=3}
+plot(score ~ chromStart, ucscTable, pch="+")
+abline(v=start(roi) + (end(roi) - start(roi) + 1) / 2, col="blue")
+``` 
+
+[AnnotationHub]: http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html
+[BSgenome]: http://bioconductor.org/packages/release/bioc/html/BSgenome.html
+[Bsgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/release/data/annotation/html/Bsgenome.Hsapiens.UCSC.hg19.html
+[Homo.sapiens]: http://bioconductor.org/packages/release/data/annotation/html/Homo.sapiens.html
+[Rsamtools]: http://bioconductor.org/packages/release/bioc/html/Rsamtools.html
+[TxDb.Hsapiens.UCSC.hg19.knownGene]: http://bioconductor.org/packages/release/data/annotation/html/TxDb.Hsapiens.UCSC.hg19.knownGene.html
+[biomaRt]: http://bioconductor.org/packages/release/bioc/html/biomaRt.html
+[org.Hs.eg.db]: http://bioconductor.org/packages/release/data/annotation/html/org.Hs.eg.db.html
+[org.Sc.sgd.db]: http://bioconductor.org/packages/release/data/annotation/html/org.Sc.sgd.db.html
+[rtracklayer]: http://bioconductor.org/packages/release/bioc/html/rtracklayer.html

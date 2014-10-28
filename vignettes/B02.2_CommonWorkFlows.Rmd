@@ -21,17 +21,18 @@ October 28, 2014
 
 ## ChIP-seq
 
-(Martin)
-
-Work flow
+See my recent
+[slides](http://bioconductor.org/help/course-materials/2014/CSAMA2014/4_Thursday/lectures/ChIPSeq_slides.pdf)
+outlining ChIP-seq and relevant _Bioconductor_ software.
 
 R / Bioconductor resources
 
 ## Variants
 
-Work flow
-
-R / Bioconductor resources
+See Michael Lawrence's variant calling with
+[VariantTools](http://bioconductor.org/help/course-materials/2014/BioC2014/Lawrence_Tutorial.pdf).
+and Val Obenchain's manipulation and annotation of called variants with
+[VariantAnnotation](http://bioconductor.org/help/workflows/variants/).
 
 ## Copy Number
 
@@ -39,8 +40,8 @@ See the [Copy Number Workflow](./B02.2.3_CopyNumber.Rmd) document.
 
 ## Epigenomics
 
-(Martin)
-
-Work flow
-
-R / Bioconductor resources
+See the short
+[introduction](http://bioconductor.org/help/course-materials/2014/Epigenomics/MethylationArrays.html)
+and
+[lab](http://bioconductor.org/help/course-materials/2014/Epigenomics/MethylationArrays-lab.html)
+centered around Illumina 450k methylation arrays and the `r Biocpkg("minfi")` package.
