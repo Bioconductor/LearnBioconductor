@@ -34,7 +34,7 @@ and Val Obenchain's manipulation and annotation of called variants with
 
 ## Copy Number
 
-See the [Copy Number Workflow](./B02.2.3_CopyNumber.Rmd) document.
+See the [Copy Number Workflow](./B02.2.3_CopyNumber.html) document.
 
 ## Epigenomics
 
