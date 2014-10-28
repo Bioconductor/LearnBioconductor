@@ -611,9 +611,9 @@ we will use the command-line version.
    Windows the PuTTY program.
 
 2. Run fastqc on sample fastq files, sending the output to the
-`~/fastqc_report` directory.
+   `~/fastqc_report` directory.
 
-    fastqc fastq/*fastq --outdir=fastqc_reports
+        fastqc fastq/*fastq --outdir=fastqc_reports
 
 3. Study the quality report and resulting on-line [documentation](FIXME):
    In the Files tab, click on `fastqc_reports`. Click on the HTML file 
