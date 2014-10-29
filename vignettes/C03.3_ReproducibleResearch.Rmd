@@ -20,7 +20,7 @@ October 29, 2014
 
 ## Importance of reproducibility
 
-A [cautionary tale]() 
+A [cautionary tale](http://bioconductor.org/help/course-materials/2013/EMBOBGI/reproducible-research.pdf) 
 
 ## Facilities enabling reproducible analysis in _R_
 
@@ -36,18 +36,50 @@ Vignettes -- 'literate programming'
 - _R_ markdown; weaving and tangling
 - _LaTeX_
 
-## Packages
+## More advanced considerations
+    
+Version control
 
-The Rstudio 'wizard'
+- Alternative (better!) to using cryptic file names to indicate
+  different versions
+- Create a 'repository', add / edit files, 'commit' changes
+- Easily review 'diff'erences, restore previous versions, ...
+- _RStudio_
 
-Benefits
+    - File -> New Project --> New Directory --> Empty Project. Click
+      'Create git repository.
+    - File --> New File --> R Script. Edit. 
+    - 'Git' icon on menu bar --> Commit 
 
-- Code re-use standardizes analysis
-- No need to copy / paste code
-- Easy to share with collegues (work group, company, world)
+Packages
 
-## Version control
+- The Rstudio 'wizard'
+- Benefits
+
+    - Code re-use standardizes analysis
+    - No need to copy / paste code
+    - Easy to share with colleagues (work group, company, world)
 
 ## Lab
 
-## Resources
+Produce a short 'vignette' summarizing your RNA-seq work
+yesterday. The code chunks might be along the lines of
+
+```{r workflow-code-chunks, eval=FALSE}
+library(airway)
+library(DESeq2)
+
+data(airway)
+
+dds <- DESeqDataSet(airway, design = ~ cell + dex)
+dds$dex <- relevel(dds$dex, "untrt")
+dds <- DESeq(dds)
+res <- results(dds)
+```
+
+Embed this in textual description with relevant descriptive
+information (title, author, date) as well as text describing nuances
+of each step, plus figures or tables of your choosing to illustrate
+relevant aspects of the experimental design or results.
+
+Render this as an HTML document to share with your colleagues at home.

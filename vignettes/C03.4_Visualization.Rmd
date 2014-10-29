@@ -26,7 +26,7 @@ approaches](http://bioconductor.org/help/course-materials/2014/summerx/Visualiza
 - `r CRANpkg("ggplot2")`
   
   - A neat _ggplot2_ example:
-    [slide 19+](http://bioconductor.org/packages/release/bioc/vignettes/ggbio/inst/doc/ggbio.pdf)
+    [slide 19+](http://bioconductor.org/help/course-materials/2014/CSAMA2014/2_Tuesday/lectures/Visualization_in_Statistical_Genomics-Carey.pdf)
     from Vince Carey's presentation.
 
 
@@ -67,10 +67,11 @@ in genomic space' in the [RNASeq lab](B02.1.1_RNASeqLab.html).
 Peruse the 
 [vignette](http://bioconductor.org/packages/release/bioc/vignettes/ggbio/inst/doc/ggbio.pdf) of the `r Biocpkg('ggbio')` package.
 
-<!--
-### _ggplot2_
+Run the following _DESeq2_ work flow to arrive at a top-table; coerce
+the result to a `data.frame`.
 
 ```{r ggplot-setup, eval=FALSE}
+library(DESeq2)
 library(airway)
 data(airway)
 se = airway
@@ -78,5 +79,14 @@ dds <- DESeqDataSet(se, design = ~ cell + dex)
 dds$dex <- relevel(dds$dex, "untrt")
 dds <- DESeq(dds)
 res <- results(dds)
+resdf <- as.data.frame(res)
 ```
--->
+
+A 'volcano plot' shows the relationship between P-value and log fold
+change. Here's a basic volcano plot using base graphics; create a
+volcano plot using _ggplot2_ and / or _lattice_.
+
+```{r volcano, eval=FALSE}
+plot(-log10(padj) ~ log2FoldChange, resdf)
+```
+
