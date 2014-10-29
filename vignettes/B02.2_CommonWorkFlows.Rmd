@@ -19,11 +19,70 @@ knitr::opts_chunk$set(tidy=FALSE)
 Martin Morgan, Sonali Arora<br/>
 October 28, 2014
 
+## RNA-seq
+
+See the [lecture notes](B02.1_RNASeq.html) and [lab](B02.1_RNASeqLab.html).
+
+RNA-seq differential expression of known _genes_
+
+- Simplest scenario
+- Experimental design: simple, replicated; track covariates and be
+  aware of batch effects
+- Sequencing: moderate length and number of reads; single or
+  paired-end (though probalbly paired-end).
+- Alignment: basic splice-aware aligner, e.g., _Bowtie2_,
+  _STAR_. Viable _Bioconductor_ approaches: `r Biocpkg("Rsubread")`,
+  `r Biocpkg("Rbowtie")` (especially via the `r Biocpkg("QuasR")`
+  package).
+- Reduction: `GenomicRanges::summarizeOverlaps()` or external tools,
+  using gene model from `TxDb.*` package or GFF / GTF files. End
+  result: matrix of counts.
+- Analysis: `r Biocpkg("DESeq2")`, `r Biocpkg("edgeR")`, and
+  additional software.
+  
+RNA-seq differential expression of known _transcripts_
+
+- Popular non-_R_ work flow: _Rbowtie2_, _tophat_, _cufflinks_, _cuffdiff_.
+- _Biocondutor_ options
+    
+    - `r Biocpkg("DEXSeq")`: differential _exon_ use.
+    - `Rsubread::subjunc()` for aligning without requiring known gene models.
+    - `r Biocpkg("cummeRbund")`: working with _cufflinks_ output.
+
+Single-cell expression
+
+- `r Biocpkg("monocle")`
+
 ## ChIP-seq
 
 See my recent
 [slides](http://bioconductor.org/help/course-materials/2014/CSAMA2014/4_Thursday/lectures/ChIPSeq_slides.pdf)
 outlining ChIP-seq and relevant _Bioconductor_ software.
+
+- Experimental design / wet lab: important to effectively enrich
+  genomic DNA via ChIP, otherwise hard to distinguish signal peaks from background
+- Sequencing: moderate length and number of single-end reads very adequate.
+- Alignment: Basic aligners sufficient
+- Reduction
+
+    - External software; many tools depending on application, e.g., _MACS_.
+    - Product: BED and / or WIG files of called peaks
+
+- Analysis & Comprehension
+
+    - `r Biocpkg("ChIPQC")` for quality control.
+    - `r Biocpkg("rtracklayer")` to input BED and WIG files to
+      standard _Bioconductor_ data structures.
+    - `r Biocpkg("ChIPpeakAnno")`, `r Biocpkg("ChIPXpres")` for
+      annotating peaks in relation to genes.
+    - `r Biocpkg("DiffBind")` to assess differential representation of
+      peaks in a designed experiment.
+    - `r Biocpkg("AnnotationHub")` for accessing (some)
+      consortium-level summary data.
+
+## Copy Number
+
+See the [Copy Number Workflow](./B02.2.3_CopyNumber.html) document.
 
 ## Variants
 
@@ -32,9 +91,30 @@ See Michael Lawrence's variant calling with
 and Val Obenchain's manipulation and annotation of called variants with
 [VariantAnnotation](http://bioconductor.org/help/workflows/variants/).
 
-## Copy Number
+- Sequencing: requires high-quality reads with high per-nucleotide
+  depth of coverage -- longer, paired-end sequencing.
+- Alignment: requires effective aligners; _BWA_, _GMAP_, ...
 
-See the [Copy Number Workflow](./B02.2.3_CopyNumber.html) document.
+    - `r Biocpkg("gmapR")` wraps the GMAP aligner in _R_.
+    
+- Reduction: typically to VCF files summarizing variants and / or
+  population-level variation. _GATK_ and other non-_R_ tools commonly
+  used.
+  
+    - `r Biocpkg("VariantTools")` includes facilities for calling
+      variants.
+    - `r Biocpkg("h5vc")` targets a different intermediate step:
+      summarize base counts at each position in the genome; use this
+      as a starting point for calling variants, and to evaluate false
+      positives, etc.
+      
+- Analysis & comprehension
+
+    - `r Biocpkg("VariantAnnotation")`, `r Biocpkg("ensemblVEP")` for
+      querying / inputing VCF files, and for annotation of variants
+      ("is this a coding variant?", etc.).
+    - `r Biocpkg("SomaticSignatures")` for working with somatic
+      signatures of single-nucleotide variatns.
 
 ## Epigenomics
 
@@ -43,3 +123,31 @@ See the short
 and
 [lab](http://bioconductor.org/help/course-materials/2014/Epigenomics/MethylationArrays-lab.html)
 centered around Illumina 450k methylation arrays and the `r Biocpkg("minfi")` package.
+
+- Analysis & comprehension: `r Biocpkg("bsseq")`, `r Biocpkg("BiSeq")`
+  for processing and analysis; `r Biocpkg("bumphunter")` as basic tool
+  for identifying CpG features.
+
+## Microbiome
+
+- Experimental design: typically population-level surveys with
+  moderate (10's-100's) of samples.
+- Wet lab & sequencing: often target phylogenetically-informative
+  genes, requiring longer (overlapping) paired-end reads. Many
+  existing studies used 454 technology, which has a different
+  sequencing error model than Illumina (e.g., homopolymers are a
+  common error, instead of trailing nucleotide quality deterioration).
+- Reduction: Pre-processing (e.g., knitting together overlapping
+  paired-end reads) and taxonomic classification / placement in
+  third-party software, e.g., _QIIME_, _pplacer_. End result: count
+  table summarizing represenation of distinct taxa in each sample.
+  
+    - `r Biocpkg("rRDP")` provides an _R_ / _Bioconductor_ interface
+      to the RDP classifiere.
+
+- Analysis: _R_ / _Bioconductor_ and many insights from microarray /
+  RNA-seq analysis well suited to count table, but common pipelines
+  have re- or dis-invented the wheel.
+  
+    - `r Biocpkg("phyloseq")` provides very nice tools for general
+      analysis.

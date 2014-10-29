@@ -48,9 +48,8 @@ Bioconductor houses a lot of R packages which provide machine learning tools for
 different kinds of Genomic Data analysis. It has had many releases since its 
 inception. The latest cutting edge development happens in the "devel" version. 
 One can find R packages specially catered to Machine Learning for Genomic 
-Analysis by visiting the following link and using _biocViews_
-
-http://www.bioconductor.org/packages/devel/BiocViews.html#___Software.
+Analysis by visiting the following link and using
+[biocViews](http://www.bioconductor.org/packages/devel/BiocViews.html#___Software).
 
 For example, one can type "Clustering" in the "Autocomplete biocViews search" 
 box and find that there are 89 packages in Bioconductor which provide 
