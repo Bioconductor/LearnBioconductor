@@ -18,14 +18,108 @@ BiocStyle::markdown()
 Martin Morgan<br/>
 October 29, 2014
 
-## Functions
+## Programming
 
-## Scripts
+_R_ is a programming language
 
-## Packages
+- Your own functions
 
-The Rstudio 'wizzard'
+  ```{r fun}
+  fun <- function(n) {
+      x <- rnorm(n)
+      y <- x + rnorm(n, sd=.5)
+      lm(y ~ x)
+  }
+  ```
 
-Version control
+    - Check out the _RStudio_ function wizard!
+
+- Iteration
+
+  ```{r iteration, eval=FALSE}
+  ## 'side effects'
+  for (i in 1:10)
+      message(i)
+
+  ## result for subsequent computation
+  sapply(1:10, function(i) {
+      sum(rnorm(1000))
+  })
+  ```
+  
+    - Other iteration paradigms: `lapply()`, `apply()`, `mapply() / Map()`.
+
+- Conditional execution
+
+  ```{r conditional, eval=FALSE}
+  sapply(1:10, function(i)) {
+      if (sum(rnorm(1000)) > 0) {
+          "hi!"
+      } else {
+          "low!"
+      }
+  })
+  ```
+
+## From script to package
+
+Scripts contain a combination of data and transformations. Often the
+transformations are idiosyncratic, and rely heavily on functions
+provided by various packages. Sometimes the script contains a useful
+chunk of code that could be reused in different places. Examples we've
+encountered in this course might include GC-content of DNA sequences
+(or is there a function for that already? check out `r
+Biocpkg("Biostrings")`!) and creating a simple 'map' from one type of
+annotation to another.
+
+It is easy and beneficial to create a package. 
+
+- Only need to think carefully about how to implement the function once.
+- Code in the package is reused -- if you correct an error, then all
+  your scripts automatically benefit.
+- Share with your lab mates / colleagues for consistent results, and
+  with the wider community for fame and glory.
+  
+What is an _R_ package?
+
+- Simple directory structure of required files. Minimal:
+
+        MyPackage
+        |-- DESCRIPTION (title, author, version, etc.)
+        |-- NAMESPACE (imports / exports)
+        |-- R (R function definitions)
+            |-- gc.R
+            |-- annoHelper.R
+        |-- man (help pages)
+            |-- MyPackage.Rd
+            |-- gc.Rd
+            |-- annoHelper.Rd
+  
+Check out the _Rstudio_ package wizard!
 
 ## Lab
+
+### GC-content
+
+Write a function that takes a `DNAStringSet` and returns the GC content.
+
+Modify the function using a conditional statement to work whether
+provided a `DNAString` or a `DNAStringSet`. Test the function.
+
+Save the function in a file on your AMI.
+
+### Annotation-helper
+
+Write a function that takes as its argument Ensembl gene identifiers
+(like the `rownames()` of the _SummarizedExperiment_ object in the
+RNASeq vignette yesterday) and uses the `select()` method and
+annotation package `r Biocannopkg("org.Hs.eg.db")` to return a named
+character vector, where the names of the vector are the Ensembl
+identifiers and the values are the corresponding gene SYMBOLs. Adopt
+some simple-to-implement policy for handling Ensembl identifiers that
+map to more than one gene symbol. Save this function to another file
+
+### A package
+
+Use the _RStudio_ wizard to create a package from the files containing
+your GC-content and annotation-helper functions.

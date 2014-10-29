@@ -18,12 +18,176 @@ BiocStyle::markdown()
 Martin Morgan<br/>
 October 29, 2014
 
-## Efficient R code
+## Scalable computing
 
-## Selection
+1. Efficient _R_ code
+   - Vectorize!
+   - Reuse others' work -- `r Biocpkg("DESeq2")`,
+     `r Biocpkg("GenomicRanges")`, `r Biocpkg("Biostrings")`, ...,
+     `r CRANpkg("dplyr")`, `r CRANpkg("data.table")`, `r CRANpkg("Rcpp")`
+   - Useful tools: `system.time()`, `Rprof()`, `r CRANpkg("microbenchmark")`
+   - More detail in
+     [deadly sins](http://bioconductor.org/help/course-materials/2014/CSAMA2014/1_Monday/labs/IntermediateR.html#efficient-code)
+     of a previous course.
+2. Iteration
+   - Chunk-wise
+   - `open()`, read chunk(s), `close()`.
+   - e.g., `yieldSize` argument to `Rsamtools::BamFile()`
+3. Restriction
+   - Limit to columns and / or rows of interest
+   - Exploit domain-specific formats, e.g., BAM files and
+     `Rsamtools::ScanBamParam()`
+   - Use a data base
+4. Sampling
+   - Iterate through large data, retaining a manageable sample, e.g.,
+     `ShortRead::FastqSampler()`
+5. Parallel evaluation
+   - **After** writing efficient code
+   - Typically, `lapply()`-like operations
+   - Cores on a single machine ('easy'); clusters (more tedious);
+     clouds
 
-## Iteration
+## Parallel evaluation in _Bioconductor_
 
-## Parallel evaluation
+- [BiocParallel][] -- `bplapply()` for `lapply()`-like functions,
+  increasingly used by package developers to provide easy, standard
+  way of gaining parallel evaluation.
+- [GenomicFiles][] -- Framework for working on groups of files,
+  ranges, or ranges x files
+- Bioconductor
+  [AMI](http://bioconductor.org/help/bioconductor-cloud-ami/) (Amazon
+  Machine Instance) including pre-configured StarCluster.
 
 ## Lab
+
+### Efficient code
+
+Write the following as a function. Use `system.time()` to explore how
+long this takes to execute as `n` increases from 100 to 10000. Use
+`identical()` and `r CRANpkg("microbenchmark")` to compare
+alternatives `f1()`, `f2()`, and `f3()` for both correctness and performance of
+these three different functions. What strategies are these functions
+using?
+
+```{r benchmark}
+f0 <- function(n) {
+    ## inefficient!
+    ans <- numeric()
+    for (i in seq_len(n))
+        ans <- c(ans, exp(i))
+    ans
+}
+
+f1 <- function(n) {
+    ans <- numeric(n)
+    for (i in seq_len(n))
+        ans[[i]] <- exp(i)
+    ans
+}
+
+f2 <- function(n)
+    sapply(seq_len(n), exp)
+
+f3 <- function(n)
+    exp(seq_len(n))
+```
+
+### Sleeping serially and in parallel
+
+Go to sleep for 1 second, then return `i`. This takes 8 seconds.
+
+```{r parallel-sleep}
+library(BiocParallel)
+
+fun <- function(i) {
+    Sys.sleep(1)
+    i
+}
+
+## serial
+f0 <- function(n)
+    lapply(seq_len(n), fun)
+
+## parallel
+f1 <- function(n)
+    bplapply(seq_len(n), fun)
+```
+
+### Counting overlaps -- our own version
+
+Regions of interest, named like the chromosomes in the bam file.
+
+```{r count-overlaps-roi, eval=FALSE}
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+exByTx <- exonsBy(TxDb.Hsapiens.UCSC.hg19.knownGene, "tx")
+
+map0 <- read.delim("~/igv/genomes/hg19_alias.tab", header=FALSE, 
+    stringsAsFactors=FALSE)
+map <- setNames(map0$V1, map0$V2)
+seqlevels(exByTx, force=TRUE) <- map
+```
+
+A function to iterate through a bam file
+
+```{r count-overlaps, eval=FALSE}
+count1 <- function(filename, roi) {
+    ## Create and open BAM file
+    bf <- BamFile(filename, yieldSize=1000000)
+    open(bf)
+
+    ## initialize variables
+    n <- 0                          # number of reads examined
+    count <- integer(length(roi))   # running count of reads overlapping roi
+    names(counts) <- names(roi)
+
+    ## read in and count chunks of data, until done
+    repeat {
+        ## input
+        aln <- readGAlignments(bf)   # input next chunk
+        if (length(aln) == 0)        # stopping condition
+            break
+        n <- n + length(aln)         # how are we doing?
+        message(n)
+        
+        ## overlaps
+        olaps <- findOverlaps(aln, roi, type="within", ignore.strand=TRUE)
+        count <- count + tabulate(subjectHits(olaps), subjectLength(olaps))
+    }
+    
+    ## finish and return result
+    close(bf)
+    count
+}
+```
+
+In action
+
+```{r count-overlaps-doit, eval=FALSE}
+filename <- "~/bam/SRR1039508_sorted.bam"
+count <- count1(filename, exByTx)
+```
+
+Parallelize
+
+```{r count-overlaps-parallel, eval=FALSE}
+library(BiocParallel)
+
+## all bam files
+filenames <- dir("~/bam", pattern="bam$", full=TRUE)
+names(filenames) <- sub("_sorted.bam", "", basename(filenames))
+
+## iterate
+counts <- bplapply(filenames, count1, exByTx)
+counts <- simplify2array(counts)
+head(counts)
+```
+
+## Resources
+
+- Lawrence, M, and Morgan, M. 2014. Scalable Genomics with R and
+  Bioconductor. Statistical Science 2014, Vol. 29, No. 2,
+  214-226. http://arxiv.org/abs/1409.2864v1
+
+[BiocParallel]: http://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[GenomicFiles]: http://bioconductor.org/packages/release/bioc/html/GenomicFiles.html
+

@@ -562,42 +562,6 @@ Visualization
   transfer data to and manipulate UCSC browser sessions.
 - Additionl packages include [ggbio][], [OmicCircos][], ...
 
-## Scalable computing (more detail later...)
-
-1. Efficient _R_ code
-   - Vectorize!
-   - Reuse others' work Know -- `r Biocpkg("DESeq2")`,
-     `r Biocpkg("GenomicRanges")`, `r Biocpkg("Biostrings")`, ...,
-     `r CRANpkg("dplyr")`, `r CRANpkg("data.table")`, `r CRANpkg("Rcpp")`
-2. Iteration
-   - Chunk-wise
-   - `open()`, read chunk(s), `close()`.
-   - e.g., `yieldSize` argument to `Rsamtools::BamFile()`
-3. Restriction
-   - Limit to columns and / or rows of interest
-   - Exploit domain-specific formats, e.g., BAM files and
-     `Rsamtools::ScanBamParam()`
-   - Use a data base
-4. Sampling
-   - Iterate through large data, retaining a manageable sample, e.g.,
-     `ShortRead::FastqSampler()`
-5. Parallel evaluation
-   - **After** writing efficient code
-   - Typically, `lapply()`-like operations
-   - Cores on a single machine ('easy'); clusters (more tedious);
-     clouds
-
-Parallel evaluation in _Bioconductor_
-
-- [BiocParallel][] -- `bplapply()` for `lapply()`-like functions,
-  increasingly used by package developers to provide easy, standard
-  way of gaining parallel evaluation.
-- [GenomicFiles][] -- Framework for working on groups of files,
-  ranges, or ranges x files
-- Bioconductor
-  [AMI](http://bioconductor.org/help/bioconductor-cloud-ami/) (Amazon
-  Machine Instance) including pre-configured StarCluster.
-
 ## Lab
 
 ### Short read quality assessment
@@ -613,7 +577,7 @@ we will use the command-line version.
 2. Run fastqc on sample fastq files, sending the output to the
    `~/fastqc_report` directory.
 
-        fastqc fastq/*fastq --outdir=fastqc_reports
+        fastqc fastq/*fastq --threads 8 --outdir=fastqc_reports
 
 3. Study the quality report and resulting on-line [documentation](FIXME):
    In the Files tab, click on `fastqc_reports`. Click on the HTML file 
@@ -821,20 +785,15 @@ _R_ / _Bioconductor_
   [help](http://bioconductor.org/help/) material (e.g., videos, EdX
   course, community blogs, ...)
 
-Publications (General _Bioconductor_)
+Publications and presentations
 
 - Lawrence M, Huber W, Pagès H, Aboyoun P, Carlson M, et al. (2013)
   Software for Computing and Annotating Genomic Ranges. PLoS Comput
   Biol 9(8): e1003118. doi:
   [10.1371/journal.pcbi.1003118][GRanges.bib]
-- Lawrence, M, and Morgan, M. 2014. Scalable Genomics with R and
-  Bioconductor. Statistical Science 2014, Vol. 29, No. 2,
-  214-226. [http://arxiv.org/abs/1409.2864v1][Scalable.bib]
-
-Other
 
 - Lawrence, M. 2014. Software for Enabling Genomic Data
-  Analysis. Bioc2014 conference [slides][Lawrence.bioc2014.bib].
+  Analysis. Bioc2014 conference [slides](http://bioconductor.org/help/course-materials/2014/BioC2014/Lawrence_Talk.pdf).
 
 <!-- Bibliography -->
 
@@ -851,7 +810,6 @@ Other
 [AnnotationHub]: http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html
 [BSgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/release/data/annotation/html/BSgenome.Hsapiens.UCSC.hg19.html
 [BSgenome]: http://bioconductor.org/packages/release/bioc/html/BSgenome.html
-[BiocParallel]: http://bioconductor.org/packages/release/bioc/html/BiocParallel.html
 [Biostrings]: http://bioconductor.org/packages/release/bioc/html/Biostrings.html
 [Bsgenome.Hsapiens.UCSC.hg19]: http://bioconductor.org/packages/release/data/annotation/html/Bsgenome.Hsapiens.UCSC.hg19.html
 [CNTools]: http://bioconductor.org/packages/release/bioc/html/CNTools.html
@@ -860,7 +818,6 @@ Other
 [DESeq2]: http://bioconductor.org/packages/release/bioc/html/DESeq2.html
 [DiffBind]: http://bioconductor.org/packages/release/bioc/html/DiffBind.html
 [GenomicAlignments]: http://bioconductor.org/packages/release/bioc/html/GenomicAlignments.html
-[GenomicFiles]: http://bioconductor.org/packages/release/bioc/html/GenomicFiles.html
 [GenomicRanges]: http://bioconductor.org/packages/release/bioc/html/GenomicRanges.html
 [Homo.sapiens]: http://bioconductor.org/packages/release/data/annotation/html/Homo.sapiens.html
 [IRanges]: http://bioconductor.org/packages/release/bioc/html/IRanges.html

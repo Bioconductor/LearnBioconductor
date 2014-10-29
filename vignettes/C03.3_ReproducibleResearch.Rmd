@@ -20,27 +20,33 @@ October 29, 2014
 
 ## Importance of reproducibility
 
-## Facilities enabling reproducible analysis in R
+A [cautionary tale]() 
 
-Basics
+## Facilities enabling reproducible analysis in _R_
+
+Basics -- quickly becomes unsatisfactory
+
 - 'Old-school' text scripts
-- Package version
+- Comments describing approaches
+- Package versions
 
 Vignettes -- 'literate programming'
-- Markdown
 
-Version control
+- Markdown
+- _R_ markdown; weaving and tangling
+- _LaTeX_
 
 ## Packages
 
 The Rstudio 'wizard'
 
 Benefits
+
 - Code re-use standardizes analysis
 - No need to copy / paste code
 - Easy to share with collegues (work group, company, world)
 
-Version control
+## Version control
 
 ## Lab
 

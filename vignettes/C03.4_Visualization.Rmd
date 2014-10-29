@@ -18,26 +18,65 @@ BiocStyle::markdown()
 Martin Morgan<br/>
 October 29, 2014
 
-## Importance and Principles
+[Three
+approaches](http://bioconductor.org/help/course-materials/2014/summerx/Visualization-slides.pdf)
 
-## Static plots
+- 'base' graphics
+- _lattice_
+- `r CRANpkg("ggplot2")`
+  
+  - A neat _ggplot2_ example:
+    [slide 19+](http://bioconductor.org/packages/release/bioc/vignettes/ggbio/inst/doc/ggbio.pdf)
+    from Vince Carey's presentation.
 
-### `r CRANpkg('ggplot2')` and `r CRANpkg('ggvis')`
 
-### Genome-centric
+Genome-centric
 
-`r Biocpkg('Gviz')`
+- `r Biocpkg("Gviz")` for visualizing genomic regions
+- `r Biocpkg("ggbio")` provides extensive options
 
-`r Biocpkg('ggbio')`
+Interactive visualization
 
-`r Biocpkg('epiv')`
+- `r Biocpkg("rtracklayer")` for visualizing genomic ranges and
+  managing UCSC genome browser sessions.
+- `r Biocpkg('epivizr')` for interactive display
+- `r CRANpkg("shiny")` [web](http://shiny.rstudio.com) for interactive
+  apps.
 
-## Interactive visualization
+Reports
 
-`r Biocpkg('epivizr')`
+- `r Biocpkg("ReportingTools")` for easy report templates
 
-`r CRANpkg('shiny')`
+And...
+
+- `r CRANpkg("RColorBrewer")` and
+  [web site](http://colorbrewer2.org/): helps choose sensible color
+  schemes.
+- [Accidental aRt](http://accidental-art.tumblr.com/archive)
+- [stick figure](https://github.com/EconometricsBySimulation/R-Graphics/blob/master/Stick-Figures/draw.stick.R)
 
 ## Lab
 
-## Resources
+### Gviz / ggbio
+
+Work through
+[vignette section 2](http://bioconductor.org/packages/release/bioc/vignettes/Gviz/inst/doc/Gviz.pdf)
+the `r Biocpkg('Gviz')` package, and then the 'Plotting fold changes
+in genomic space' in the [RNASeq lab](B02.1.1_RNASeqLab.html).
+
+Peruse the 
+[vignette](http://bioconductor.org/packages/release/bioc/vignettes/ggbio/inst/doc/ggbio.pdf) of the `r Biocpkg('ggbio')` package.
+
+<!--
+### _ggplot2_
+
+```{r ggplot-setup, eval=FALSE}
+library(airway)
+data(airway)
+se = airway
+dds <- DESeqDataSet(se, design = ~ cell + dex)
+dds$dex <- relevel(dds$dex, "untrt")
+dds <- DESeq(dds)
+res <- results(dds)
+```
+-->

@@ -129,7 +129,7 @@ Splice-aware aligners (and _Bioconductor_ wrappers)
 
 ### (5a. Bowtie2 / tophat / Cufflinks / Cuffdiff)
 
-- [tophat][] uses [bowtie2][] to perform basic single- and paired-end
+- [tophat][] uses [Bowtie2][] to perform basic single- and paired-end
   alignments, then uses algorithms to place difficult-to-align reads
   near to their well-aligned mates.
 - [Cufflinks][] ([doi](http://dx.doi.org/10.1038/nprot.2012.016))
@@ -250,14 +250,14 @@ Placing differentially expressed regions in context
 
 ## Lab
 
-[The lab](B02.1.1_RNASeqLab.Rmd) is based on a modified version of the
+[The lab](B02.1.1_RNASeqLab.html) is based on a modified version of the
 RNA-seq work flow developed by Michael Love, Simon Anders, Wolfgang
 Huber.
 
 
 [Bowtie2]: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
-[TopHat]: http://ccb.jhu.edu/software/tophat/index.shtml [Cufflinks]:
-http://cufflinks.cbcb.umd.edu/
+[tophat]: http://ccb.jhu.edu/software/tophat/index.shtml 
+[Cufflinks]: http://cufflinks.cbcb.umd.edu/
 
 [RSEM]: http://deweylab.biostat.wisc.edu/rsem/
 [STAR]: https://github.com/alexdobin/STAR

@@ -237,7 +237,7 @@ plot(dend, main ="Clustering using Complete Linkage")
 
 ### Exercise 
 
-1. Perform hierarchical clustering using average and and single linkage. 
+1. Perform hierarchical clustering using average and single linkage. 
 2. Interpret the difference in the dendrograms. 
 3. Can you observe some patterns from these dendrograms? (hint: use cutree)
 
