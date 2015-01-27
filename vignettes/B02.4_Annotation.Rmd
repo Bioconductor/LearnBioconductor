@@ -111,7 +111,7 @@ queries is in following Table.
 | [SRAdb](http://www.ncbi.nlm.nih.gov/sra)            | Sequencing experiments.                   |
 | [rtracklayer](http://genome.ucsc.edu)               | genome tracks.                            |
 | [GEOquery](http://www.ncbi.nlm.nih.gov/geo/)        | Array and other data                      |
-| [ArrayExpress](http://www.ebi.ac.uk/arrayexpress/)] | Array and other data                      |
+| [ArrayExpress](http://www.ebi.ac.uk/arrayexpress/)  | Array and other data                      |
 
 *Using biomaRt*
 
@@ -205,7 +205,7 @@ transcripts.
    identifier. (The 'org\*' packages are based on information from
    NCBI, where Entrez identifiers are labeled ENTREZID; the 'TxDb*'
    package we are using is from UCSC, where Entrez identifiers are
-   labelled GENEID).
+   labeled GENEID).
 3. Use the `cdsBy()` function to retrieve the genomic coordinates of
    all coding sequences grouped by transcript, and select the
    transcripts corresponding to the identifiers we're interested
@@ -213,7 +213,7 @@ transcripts.
    each element of the list is a `GRanges` object representing the
    exons in the coding sequence. As a sanity check, ensure that the
    sum of the widths of the exons in each coding sequence is evenly
-   divisble by 3 (the R 'modulus' operator `%%` returns the remainder
+   divisible by 3 (the R 'modulus' operator `%%` returns the remainder
    of the division of one number by another, and might be helpful in
    this case).
 
@@ -257,7 +257,7 @@ cdswidth <- width(brca1cds)             # width of each exon
 all((sum(cdswidth) %% 3) == 0)          # sum within cds, modulus 3
 ```
 
-Visualize the BRCA1 transcirpts using [Gviz][] (this package has an
+Visualize the BRCA1 transcripts using [Gviz][] (this package has an
 excellent vignette, `vignette("Gviz")`)
 
 ```{r Gviz, message=FALSE}

@@ -29,7 +29,7 @@ RNA-seq differential expression of known _genes_
 - Experimental design: simple, replicated; track covariates and be
   aware of batch effects
 - Sequencing: moderate length and number of reads; single or
-  paired-end (though probalbly paired-end).
+  paired-end (though probably paired-end).
 - Alignment: basic splice-aware aligner, e.g., _Bowtie2_,
   _STAR_. Viable _Bioconductor_ approaches: `r Biocpkg("Rsubread")`,
   `r Biocpkg("Rbowtie")` (especially via the `r Biocpkg("QuasR")`
@@ -40,7 +40,7 @@ RNA-seq differential expression of known _genes_
 - Analysis: `r Biocpkg("DESeq2")`, `r Biocpkg("edgeR")`, and
   additional software.
   
-RNA-seq differential expression of known _transcripts_
+RNA-seq differential expression of known and novel _transcripts_
 
 - Popular non-_R_ work flow: _Rbowtie2_, _tophat_, _cufflinks_, _cuffdiff_.
 - _Biocondutor_ options
@@ -111,10 +111,10 @@ and Val Obenchain's manipulation and annotation of called variants with
 - Analysis & comprehension
 
     - `r Biocpkg("VariantAnnotation")`, `r Biocpkg("ensemblVEP")` for
-      querying / inputing VCF files, and for annotation of variants
+      querying / inputting VCF files, and for annotation of variants
       ("is this a coding variant?", etc.).
     - `r Biocpkg("SomaticSignatures")` for working with somatic
-      signatures of single-nucleotide variatns.
+      signatures of single-nucleotide variants.
 
 ## Epigenomics
 
