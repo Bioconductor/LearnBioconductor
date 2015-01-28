@@ -1,33 +1,21 @@
 Package: LearnBioconductor
 Type: Package
-Title: Learning R / Bioconductor for Sequence Analysis
-Version: 0.1.6
+Title: Learn R / Bioconductor for Sequence Analysis
+Version: 0.1.7
 Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
                     email="mtmorgan@fhcrc.org"),
-             person("Sonali", "Arora", role="aut"))
+             person("Sonali", "Arora", role="aut"),
+             person("Herve", "Pages", role="aut"))
 License: Artistic-2.0
 VignetteBuilder: knitr
 Description: This course is directed at beginning and intermediate
     students who would like an introduction to the analysis and
     comprehension of high-throughput sequence data using R and
-    Bioconductor. Day 1 focuses on learning essential background: an
-    introduction to the R programming language; central concepts for
-    effective use of Bioconductor software; and an overview of
-    high-throughput sequence analysis work flows. Day 2 emphasizes use
-    of Bioconductor for specific tasks: an RNA-seq differential
-    expression work flow; exploratory, machine learning, and other
-    statistical tasks; gene set enrichment; and annotation.  Day 3
-    transitions to understanding effective approaches for managing
-    larger challenges: strategies for working with large data, writing
-    re-usable functions, developing reproducible reports and work
-    flows, and visualizing results. The course combines lectures with
-    extensive hands-on practicals; students are required to bring a
-    laptop with wireless internet access and a modern version of the
-    Chrome or Safari web browser.
-Packaged: 2014-10-27 01:31:35 UTC; dante
-Author: Martin Morgan [aut, cre],
-  Sonali Arora [aut]
-Maintainer: Martin Morgan <mtmorgan@fhcrc.org>
+    Bioconductor. The README.md file in the root directory of the
+    package gitub repository outlines detailed content. The course
+    combines lectures with extensive hands-on practicals; participants
+    are required to bring a laptop with wireless internet access and a
+    modern version of the Chrome or Safari web browser.
 Suggests: knitr, BiocStyle, BiocInstaller, ALL,
     BSgenome.Hsapiens.UCSC.hg19, BiocParallel, Biostrings,
     GenomicAlignments, GenomicFeatures, Gviz, MLSeq, PoiClaClu,
