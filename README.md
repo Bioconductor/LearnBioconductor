@@ -4,8 +4,7 @@ Learning R / Bioconductor for Sequence Analysis
 Genentech, San Francisco, CAA<br />
 2-3 February 2015
 
-Contact: Martin Morgan (content,
-[mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
+Contact: Martin Morgan ([mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
 
 This course is directed at beginning and intermediate users who would
 like an introduction to the analysis and comprehension of
@@ -45,4 +44,4 @@ Day 2: Use _R_ / _Bioconductor_
 - 2:15 - 3:00 Organizing code in functions, files, and packages
 - 3:15 - 4:00 Reproducible reports and work flows: markdown
 - 4:00 - 4:45 Visualization
-- 4:30 - 5:00 Summary
+- 4:45 - 5:00 Summary
