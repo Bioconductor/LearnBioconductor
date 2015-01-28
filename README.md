@@ -29,10 +29,10 @@ Schedule (tentative)
 Day 1: Learn _R_ / _Bioconductor_
 
 - 9:00 - 10:30 Introduction to _R_: objects, functions, help!
-- 11:00 - 12:30 Introduction to _Bioconductor_: working with packages and classes
-- 1:30 - 5:00 (break: 3:00 - 3:15) Introduction to sequence analysis:
-  typical work flow; data types and quality assessment; essential
-  _Bioconductor_ packages
+- 11:00 - 12:30 Introduction to _Bioconductor_: working with packages
+  and classes
+- 1:30 - 5:00 Introduction to sequence analysis: typical work flow;
+  data types and quality assessment; essential _Bioconductor_ packages
 
 Day 2: Use _R_ / _Bioconductor_ 
 
