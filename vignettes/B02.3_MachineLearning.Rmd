@@ -12,7 +12,7 @@ knitr::opts_chunk$set(tidy=FALSE)
 ```{r setup, echo=FALSE}
 library(LearnBioconductor)
 library(xtable)
-stopifnot(BiocInstaller::biocVersion() == "3.0")
+stopifnot(BiocInstaller::biocVersion() == "3.1")
 ```
 
 # Machine Learning 

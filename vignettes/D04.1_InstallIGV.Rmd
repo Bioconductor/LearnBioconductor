@@ -5,7 +5,7 @@
 -->
 
 ```{r setup, echo=FALSE}
-stopifnot(BiocInstaller::biocVersion() == "3.0")
+stopifnot(BiocInstaller::biocVersion() == "3.1")
 ```
 
 ```{r style, echo = FALSE, results = 'asis'}

@@ -6,7 +6,7 @@
 
 ```{r setup, echo=FALSE}
 library(LearnBioconductor)
-stopifnot(BiocInstaller::biocVersion() == "3.0")
+stopifnot(BiocInstaller::biocVersion() == "3.1")
 ```
 
 ```{r style, echo = FALSE, results = 'asis'}
@@ -351,7 +351,7 @@ IRangesList, GRangesList
         
 Reference
 
-- Lawrence M, Huber W, Pagès H, Aboyoun P, Carlson M, et al. (2013)
+- Lawrence M, Huber W, Pages H, Aboyoun P, Carlson M, et al. (2013)
   Software for Computing and Annotating Genomic Ranges. PLoS Comput
   Biol 9(8): e1003118. doi:10.1371/journal.pcbi.1003118
 
@@ -787,7 +787,7 @@ _R_ / _Bioconductor_
 
 Publications and presentations
 
-- Lawrence M, Huber W, Pagès H, Aboyoun P, Carlson M, et al. (2013)
+- Lawrence M, Huber W, Pages H, Aboyoun P, Carlson M, et al. (2013)
   Software for Computing and Annotating Genomic Ranges. PLoS Comput
   Biol 9(8): e1003118. doi:
   [10.1371/journal.pcbi.1003118][GRanges.bib]

@@ -8,7 +8,7 @@
 options(error=traceback)
 library(LearnBioconductor)
 set.seed(123L)
-stopifnot(BiocInstaller::biocVersion() == "3.0")
+stopifnot(BiocInstaller::biocVersion() == "3.1")
 ```
 
 ```{r style, echo = FALSE, results = 'asis'}
@@ -27,7 +27,7 @@ genome which range in length between 50 bp and 1 Mbp. They are
 widespread among humans - on an average 12 CNVs exist per individual
 in comparison to the reference genome. They have also been shown to
 play a role in diseases such as autism, breast cancer, obesity,
-Alzheimer’s disease and schizophrenia among other diseases.
+Alzheimer's disease and schizophrenia among other diseases.
 
 ## Experimental design
 

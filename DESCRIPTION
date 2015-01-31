@@ -22,5 +22,5 @@ Suggests: knitr, BiocStyle, BiocInstaller, ALL,
     RColorBrewer, RNAseqData.HNRNPC.bam.chr14, Rsamtools, ShortRead,
     TxDb.Hsapiens.UCSC.hg19.knownGene, VariantAnnotation, airway,
     class, cn.mops, dendextend, fission, genefilter, ggplot2, gplots,
-    org.Hs.eg.db, sva, xtable, PoiClaClu, sva, fission, kernlab,
+    org.Hs.eg.db, sva, xtable, PoiClaClu, sva, kernlab,
     e1071

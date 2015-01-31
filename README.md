@@ -19,9 +19,9 @@ flow.  The afternoon of Day 2 transitions to understanding effective
 approaches for managing larger challenges: strategies for working with
 large data, writing re-usable functions, developing reproducible
 reports and work flows, and visualizing results.  The course combines
-lectures with extensive hands-on practicals; students are required to
-bring a laptop with wireless internet access and a modern version of
-the Chrome or Safari web browser.
+lectures with extensive hands-on practicals; participants are required
+to bring a laptop with wireless internet access and a modern version
+of the Chrome or Safari web browser.
 
 Schedule (tentative)
 --------------------
