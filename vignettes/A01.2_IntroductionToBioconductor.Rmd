@@ -17,7 +17,7 @@ knitr::opts_chunk$set(tidy=FALSE)
 # Introduction to Bioconductor
 
 Martin Morgan<br/>
-October 29, 2014
+February 2, 2015
 
 ## Bioconductor
 

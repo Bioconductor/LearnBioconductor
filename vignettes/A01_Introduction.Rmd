@@ -15,27 +15,27 @@ BiocStyle::markdown()
 
 # Learning R / Bioconductor for Sequence Analysis
 
-This package contains training material for a Fall, 2014 introductory
+This package contains training material for a Winter, 2014 introductory
 _R_ / _Bioconductor_ course "Learning _R_ / _Bioconductor_ for Sequence
-Analysis", offered October 27-29, Seattle, WA.
+Analysis", offered February 2-3, Genentech, San Francisco, CA.
 
-This course is directed at beginning and intermediate users who
-would like an introduction to the analysis and comprehension of
-high-throughput sequence data using _R_ and _Bioconductor_. Day 1 focuses
-on learning essential background: an introduction to the _R_ programming
-language; central concepts for effective use of _Bioconductor_ software;
-and an overview of high-throughput sequence analysis work flows. Day 2
-emphasizes use of _Bioconductor_ for specific tasks: an RNA-seq
-differential expression work flow; exploratory, machine learning, and
-other statistical tasks; gene set enrichment; and annotation.  Day 3
-transitions to understanding effective approaches for managing larger
-challenges: strategies for working with large data, writing re-usable
-functions, developing reproducible reports and work flows, and
-visualizing results.
+This course is directed at beginning and intermediate users who would
+like an introduction to the analysis and comprehension of
+high-throughput sequence data using _R_ and
+_[Bioconductor](http://bioconductor.org)_. Day 1 focuses on learning
+essential background: an introduction to the _R_ programming language;
+central concepts for effective use of _Bioconductor_ software; and an
+overview of high-throughput sequence analysis work flows. The morning
+of Day 2 emphasizes use of _Bioconductor_ for specific tasks, and in
+particular takes detailed look at RNA-seq differential expression work
+flow.  The afternoon of Day 2 transitions to understanding effective
+approaches for managing larger challenges: strategies for working with
+large data, writing re-usable functions, developing reproducible
+reports and work flows, and visualizing results.
 
 The course combines lectures with extensive hands-on practicals;
-students are required to bring a laptop with wireless internet access
-and a modern version of the Chrome or Safari web browser.
+participants are required to bring a laptop with wireless internet
+access and a modern version of the Chrome or Safari web browser.
 
 ## Schedule (tentative)
 
@@ -53,24 +53,15 @@ Day 1: Learn _R_ / _Bioconductor_
 
 Day 2: Use _R_ / _Bioconductor_ 
 
-- 9:00 - 12:30 (break: 10:30 - 11:00) An RNA-seq differential
+- 9:00 - 12:00 (break: 10:30 - 11:00) An RNA-seq differential
   expression work flow ([lecture](B02.1_RNASeq.html);
   [practical](B02.1.1_RNASeqLab.html))
-- 1:30 - 2:00 [Other work flows](B02.2_CommonWorkFlows.html) (survey):
+- 12:00 - 12:30 [Other work flows](B02.2_CommonWorkFlows.html) (survey):
   ChIP-seq, variants, copy number, epigenomics
-- 2:00 - 3:00 [Machine learning](B02.3_MachineLearning.html);
-  exploratory and other statistical analysis
-- 3:30 - 4:00
-  [Annotating genes, genomes, and variants](B02.4_Annotation.html)
-- 4:00 - 5:00
-  [Approaches to gene set enrichment](B02.5_GeneSetEnrichment.html)
-
-Day 3: Develop Skills and Best Practices
-
-- 9:00 - 10:30 [Working with large data](C03.1_LargeData.html)
-- 11:00 - 12:30
+- 1:30 - 2:15 [Working with large data](C03.1_LargeData.html)
+- 2:15 - 3:00
   [Organizing code in functions, files, and packages](C03.2_CodeToPackages.html)
-- 1:30 - 3:00
+- 3:15 - 4:00
   [Reproducible reports and work flows](C03.3_ReproducibleResearch.html)
-- 3:30 - 4:30 [Visualization](C03.4_Visualization.html)
-- 4:30 - 5:00 Summary
+- 4:00 - 4:45 [Visualization](C03.4_Visualization.html)
+- 4:45 - 5:00 Summary

@@ -16,7 +16,7 @@ BiocStyle::markdown()
 # Annotating Genes, Genomes, and Variants
 
 Martin Morgan<br/>
-October 28, 2014
+February 3, 2015
 
 ```{r pkgs, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 options(max.print=1000)

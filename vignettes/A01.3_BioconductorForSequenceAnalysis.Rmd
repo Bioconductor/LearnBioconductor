@@ -17,7 +17,7 @@ knitr::opts_chunk$set(tidy=FALSE)
 # Bioconductor for Sequence Analysis
 
 Martin Morgan<br/>
-October 29, 2014
+February 2, 2015
 
 ## Sequence analysis work flows
 
@@ -661,8 +661,8 @@ files for aligned reads.
 
 1. Attach 'Annotation' packages containing information about gene
    symbols `r Biocannopkg("org.Hs.eg.db")` and genomic coordinates
-   (e.g., genes, exons, cds, transcripts) `r
-   Biocannopkg(TxDb.Hsapiens.UCSC.hg19.knownGene)`. Arrange for the
+   (e.g., genes, exons, cds, transcripts)
+   `r Biocannopkg(TxDb.Hsapiens.UCSC.hg19.knownGene)`. Arrange for the
    'seqlevels' (chromosome names) in the TxDb package to match those
    in the BAM files.
 

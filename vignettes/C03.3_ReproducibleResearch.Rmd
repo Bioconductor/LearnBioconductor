@@ -16,7 +16,7 @@ BiocStyle::markdown()
 # Reproducible Research
 
 Martin Morgan<br/>
-October 29, 2014
+February 3, 2015
 
 ## Importance of reproducibility
 

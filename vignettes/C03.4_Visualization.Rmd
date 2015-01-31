@@ -16,7 +16,7 @@ BiocStyle::markdown()
 # Visualization
 
 Martin Morgan<br/>
-October 29, 2014
+February 3, 2015
 
 [Three
 approaches](http://bioconductor.org/help/course-materials/2014/summerx/Visualization-slides.pdf)

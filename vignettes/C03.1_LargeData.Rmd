@@ -16,7 +16,7 @@ BiocStyle::markdown()
 # Working with Large Data
 
 Martin Morgan<br/>
-October 29, 2014
+February 3, 2015
 
 ## Scalable computing
 

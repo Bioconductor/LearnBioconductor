@@ -16,7 +16,7 @@ BiocStyle::markdown()
 # Gene Set Enrichment and Pathway Analysis
 
 Martin Morgan<br/>
-October 28, 2014
+February 3, 2015
 
 My overview of approaches to [gene set
 enrichment](http://bioconductor.org/help/course-materials/2013/EMBOBGI/GeneSetEnrichment.pdf),

@@ -17,7 +17,7 @@ knitr::opts_chunk$set(tidy=FALSE)
 # Common Sequence Analysis Work Flows
 
 Martin Morgan, Sonali Arora<br/>
-October 28, 2014
+February 3, 2015
 
 ## RNA-seq
 
@@ -82,7 +82,33 @@ outlining ChIP-seq and relevant _Bioconductor_ software.
 
 ## Copy Number
 
-See the [Copy Number Workflow](./B02.2.3_CopyNumber.html) document.
+Experimental design
+
+- Duplications or deletions larger than 1 kb
+- Germ line (primarily diploid genome, homogeneous sample, integer
+  copy numbers) or somatic variants?
+- Tumor / normal pairs?
+
+Assays
+
+- aCGH, SNP, and other arrays (`r Biocpkg("CGHbase")`, 
+  `r Biocpkg("crlmm")`, `r Biocpkg("CopyNumber450K")`)
+- Low or high-coverage; exome or whole-genome sequencing.
+
+Reduction
+
+- Bin and count. GC and other (e.g., exon length) correction. Easily
+  and efficiently done with, e.g., `GenomicRanges::tileGenome()` and
+  `r Biocpkg("GenomicFiles")`.
+- Segment -- circular binary segmentation (often via 
+  `r Biocpkg("DNAcopy")`), HMM
+
+Analysis & comprehension
+
+- 45 packages tagged with "CopyNumberVariation" in
+  [biocViews](http://bioconductor.org/packages/devel/BiocViews.html#___CopyNumberVariation); also terms "DNASeq", "ExomeSeq", "WholeGenome"
+- Represent duplicated regions as genomic ranges; integrates very
+  easily in _Bioconductor_ annotation work flows.
 
 ## Variants
 

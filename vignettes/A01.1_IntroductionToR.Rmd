@@ -17,7 +17,7 @@ knitr::opts_chunk$set(tidy=FALSE)
 # Introduction to R
 
 Martin Morgan<br/>
-October 27, 2014
+February 2, 2015
 
 ## R
 

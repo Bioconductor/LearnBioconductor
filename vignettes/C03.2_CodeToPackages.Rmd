@@ -16,7 +16,7 @@ BiocStyle::markdown()
 # Organizing Code in Functions, Files ,and Packages
 
 Martin Morgan<br/>
-October 29, 2014
+February 3, 2015
 
 ## Programming
 

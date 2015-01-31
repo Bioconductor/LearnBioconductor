@@ -36,7 +36,7 @@ Day 1: Learn _R_ / _Bioconductor_
 
 Day 2: Use _R_ / _Bioconductor_ 
 
-- 9:00 - 12:30 (break 10:30 - 10:45) An RNA-seq differential
+- 9:00 - 12:00 (break 10:30 - 10:45) An RNA-seq differential
   expression work flow (detail)
 - 12:00 - 12:30 Other work flows (survey): ChIP-seq, variants, copy
   number, epigenomics
