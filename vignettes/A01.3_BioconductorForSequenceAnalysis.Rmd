@@ -662,7 +662,7 @@ files for aligned reads.
 1. Attach 'Annotation' packages containing information about gene
    symbols `r Biocannopkg("org.Hs.eg.db")` and genomic coordinates
    (e.g., genes, exons, cds, transcripts)
-   `r Biocannopkg(TxDb.Hsapiens.UCSC.hg19.knownGene)`. Arrange for the
+   `r Biocannopkg("TxDb.Hsapiens.UCSC.hg19.knownGene")`. Arrange for the
    'seqlevels' (chromosome names) in the TxDb package to match those
    in the BAM files.
 
