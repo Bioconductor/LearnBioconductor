@@ -215,7 +215,7 @@ seqinfo(bamfiles[1])
 Next, we need to read in the gene model which will be used for
 counting reads. We will read the gene model from a
 [GTF file](http://www.ensembl.org/info/website/upload/gff.html), using
-*makeTranscriptDbFromGFF* from the `r Biocpkg("GenomicFeatures")`
+*makeTxDbFromGFF* from the `r Biocpkg("GenomicFeatures")`
 package. GTF files can be downloaded from
 Ensembl's FTP site or other gene model repositories.
 A *TranscriptDb* object is a database which can be used to
@@ -226,7 +226,7 @@ There are other options for constructing a *TranscriptDB*.
 For the *known genes* track from the UCSC Genome Browser,
 one can use the pre-built Transcript DataBase:
 `r Biocannopkg("TxDb.Hsapiens.UCSC.hg19.knownGene")`.
-The *makeTranscriptDbFromBiomart* function can be used to automatically
+The *makeTxDbFromBiomart* function can be used to automatically
 pull a gene model from Biomart. 
 
 ```{r}
@@ -235,7 +235,7 @@ library("GenomicFeatures")
 
 ```{r}
 gtffile <- file.path(dir,"Homo_sapiens.GRCh37.75_subset.gtf")
-(txdb <- makeTranscriptDbFromGFF(gtffile, format="gtf"))
+(txdb <- makeTxDbFromGFF(gtffile, format="gtf"))
 ```
 
 The following line produces a *GRangesList* of all the exons grouped by gene.
