@@ -630,31 +630,6 @@ annotation package; see the
 [vignette](http://bioconductor.org/packages/release/data/experiment/vignettes/airway/inst/doc/airway.html)
 for details
 
-Integrative Genomics Viewer
-
-1. Start IGV and select the "hg19" genome.
-
-2. The sequence names used in the reference genome differ from those
-   used by IGV to represent the identical genome. We need to map
-   between these different sequence names, following the instructions
-   for
-   [Creating a Chromosome Name Alias File](http://www.broadinstitute.org/software/igv/LoadData/#aliasfile).
-
-   Copy the file `hg19_alias.tab` from the location specified in class
-   into the directory `<user_home>/igv/genomes/`. Restart IGV.
-
-3. Start igv.
-
-4. Choose hg19 from the drop-down menu at the top left of
-   the screen
-
-5. Use `File -> Load from URL` menu to load a bam file. The URLs will
-   be provided during class.
-
-6. Zoom in to a particular gene, e.g., SPARCL1, by entering the gene
-   symbol in the box toward the center of the browser window. Adjust
-   the zoom until reads come in to view, and interpret the result.
-
 _Bioconductor_: we'll explore how to map between different types of
 identifiers, how to navigate genomic coordinates, and how to query BAM
 files for aligned reads.
