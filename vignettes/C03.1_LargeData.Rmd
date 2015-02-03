@@ -160,6 +160,31 @@ count1 <- function(filename, roi) {
 }
 ```
 
+An improvement: `r Biocpkg("GenomicFiles")``::reduceByYield()`
+replaces `repeat {}` section
+
+```{r reduceByYield, eval=FALSE}
+suppressPackageStartupMessages({
+    library(GenomicFiles)
+})
+
+## how to input the next chunk of data
+yield <- function(X, ...)
+    readGAlignments(X)
+}
+
+## what to do to each chunk
+map <- function(VALUE, ..., roi) {
+    olaps <- findOverlaps(VALUE, roi, type="within", ignore.strand=TRUE)
+    tabulate(subjectHits(olaps), subjectLength(olaps))
+}
+
+## how to combine mapped chunks
+reduce <- `+`
+
+reduceByYield(bf, yield, map, reduce, roi=roi)
+```
+
 In action
 
 ```{r count-overlaps-doit, eval=FALSE}

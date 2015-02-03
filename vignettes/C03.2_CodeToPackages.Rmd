@@ -52,12 +52,13 @@ _R_ is a programming language
 - Conditional execution
 
   ```{r conditional, eval=FALSE}
-  sapply(1:10, function(i)) {
+  sapply(1:10, function(i) {
       if (sum(rnorm(1000)) > 0) {
-          "hi!"
+          ans <- "hi!"
       } else {
-          "low!"
+          ans <- "low!"
       }
+      ans
   })
   ```
 
@@ -68,8 +69,8 @@ transformations are idiosyncratic, and rely heavily on functions
 provided by various packages. Sometimes the script contains a useful
 chunk of code that could be reused in different places. Examples we've
 encountered in this course might include GC-content of DNA sequences
-(or is there a function for that already? check out `r
-Biocpkg("Biostrings")`!) and creating a simple 'map' from one type of
+(or is there a function for that already? check out
+`r Biocpkg("Biostrings")`!) and creating a simple 'map' from one type of
 annotation to another.
 
 It is easy and beneficial to create a package. 
