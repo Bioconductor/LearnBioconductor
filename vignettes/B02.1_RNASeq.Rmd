@@ -59,7 +59,7 @@ Be aware of _batch effects_
 - Leek et al., 2010, Nature Reviews Genetics 11
   [733-739](http://www.nature.com/nrg/journal/v11/n10/abs/nrg2825.html),
   Leek & Story PLoS Genet 3(9):
-  [e161](http://dx.doi.org/10.1371/journal.pgen.0030161).
+  [e161](https://doi.org/10.1371/journal.pgen.0030161).
 - Scientific finding: pervasive batch effects
 - Statistical insights: surrogate variable analysis: identify and
   build surrogate variables; remove known batch effects
@@ -120,19 +120,19 @@ Alignment strategies
 Splice-aware aligners (and _Bioconductor_ wrappers)
 
 - [Bowtie2][] (`r Biocpkg("Rbowtie")`)
-- [STAR][] ([doi](http://dx.doi.org/10.1093/bioinformatics/bts635))
+- [STAR][] ([doi](https://doi.org/10.1093/bioinformatics/bts635))
 - [GMAP/GSNAP][] (`r Biocpkg("gmapR")`)
-- subread ([doi](http://dx.doi.org/10.1093/nar/gkt214))
+- subread ([doi](https://doi.org/10.1093/nar/gkt214))
   (`r Biocpkg("Rsubread")`)
 - Systematic evaluation (Engstrom et al., 2013,
-  [doi](http://dx.doi.org/10.1038/nmeth.2722))
+  [doi](https://doi.org/10.1038/nmeth.2722))
 
 ### (5a. Bowtie2 / tophat / Cufflinks / Cuffdiff)
 
 - [tophat][] uses [Bowtie2][] to perform basic single- and paired-end
   alignments, then uses algorithms to place difficult-to-align reads
   near to their well-aligned mates.
-- [Cufflinks][] ([doi](http://dx.doi.org/10.1038/nprot.2012.016))
+- [Cufflinks][] ([doi](https://doi.org/10.1038/nprot.2012.016))
   takes _tophat_ output and estimate existing and novel transcript
   abundance.
   [How Cufflinks Works](http://cufflinks.cbcb.umd.edu/howitworks.html)

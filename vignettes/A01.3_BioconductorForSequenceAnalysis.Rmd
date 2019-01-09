@@ -799,7 +799,7 @@ Publications and presentations
 
 [R]: http://r-project.org
 [Bioconductor]: http://bioconductor.org
-[GRanges.bib]: http://dx.doi.org/10.1371/journal.pcbi.1003118
+[GRanges.bib]: https://doi.org/10.1371/journal.pcbi.1003118
 [Scalable.bib]: http://arxiv.org/abs/1409.2864
 [Lawrence.bioc2014.bib]:
     http://bioconductor.org/help/course-materials/2014/BioC2014/Lawrence_Talk.pdf
